@@ -11,7 +11,11 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        principal: "#9ba524",
       },
+      backgroundImage: {
+        loginImg: "url('/bg-login.png')"
+      }
     },
   },
   plugins: [],
