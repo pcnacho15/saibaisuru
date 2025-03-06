@@ -12,3 +12,72 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Rol {
+  admin
+  user
+}
+
+enum Semilla {
+  feminizada
+  regular
+  automatica
+}
+
+model categorias {
+  id        String      @id @default(uuid())
+  nombre    String      @unique
+  productos productos[]
+}
+
+model productos {
+  id            String  @id @default(uuid())
+  titulo        String
+  descripcion   String
+  notas         String
+  cantidad      Int
+  precio        Float   @default(0)
+  aroma         String
+  sabor         String
+  contenido     Int
+  cosecha_aprox String
+  tipo          Semilla
+
+  categoria     categorias @relation(fields: [categorias_id], references: [id])
+  categorias_id String
+
+  canabinoides      canabinoides[]
+  producto_imagenes producto_imagenes[]
+
+  @@index([tipo])
+}
+
+model canabinoides {
+  id         String @id @default(uuid())
+  titulo     String
+  porcentaje Float  @default(0)
+
+  producto     productos @relation(fields: [productos_id], references: [id])
+  productos_id String
+}
+
+// model terpenos {
+
+// }
+
+model producto_imagenes {
+  id  String @id @default(uuid())
+  url String
+
+  producto     productos @relation(fields: [productos_id], references: [id])
+  productos_id String
+}
+
+model usuarios {
+  id               String  @id @default(uuid())
+  email            String  @unique
+  email_confirmado Boolean @default(false)
+  clave            String
+  rol              Rol     @default(user)
+  image            String?
+}

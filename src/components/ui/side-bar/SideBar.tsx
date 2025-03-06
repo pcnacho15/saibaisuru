@@ -17,26 +17,27 @@ import {
   IoShirtOutline,
   IoTicketOutline,
 } from "react-icons/io5";
-// import { useSession } from "next-auth/react";
-// import { logout } from "@/modules/auth/actions/logout";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { logout } from "@/actions";
 
 export const Sidebar = () => {
+
   const isSideMenuOpen = useUiStore((state) => state.isSideMenuOpen);
 
   const closeMenu = useUiStore((state) => state.closeSideMenu);
 
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
 
   const pathName = usePathname();
 
-  // const isAuthenticated = !!session?.user;
+  const isAuthenticated = !!session?.user;
   // const isAdmin = session?.user.role === "admin";
 
-  const onLogout = async () => {
-    // await logout();
-    window.location.replace(pathName);
-  };
+  // const onLogout = async () => {
+  //   await logout();
+  //   window.location.replace(pathName);
+  // };
 
   return (
     <div>
@@ -120,7 +121,7 @@ export const Sidebar = () => {
           <div className="w-full h-px bg-gray-200 my-10"></div>
         </div>
 
-        {/* {isAuthenticated && (
+        {isAuthenticated && (
           <>
             <Link
               href="/profile"
@@ -137,12 +138,12 @@ export const Sidebar = () => {
               className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
             >
               <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl">Mis pedidos</span>
+              <span className="ml-3 text-xl">Mis compras</span>
             </Link>
 
             <div className="w-full h-px bg-gray-200 my-10"></div>
           </>
-        )} */}
+        )}
 
         {/* {isAdmin && (
           <>
@@ -176,26 +177,15 @@ export const Sidebar = () => {
           </>
         )} */}
 
-        {/* {isAuthenticated && (
+        {isAuthenticated && (
           <button
-            onClick={() => onLogout()}
+            onClick={() => logout()}
             className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
           >
             <IoLogOutOutline size={30} />
             <span className="ml-3 text-xl">Salir</span>
           </button>
-        )} */}
-
-        {/* {!isAuthenticated && (
-          <Link
-            href="/auth/login"
-            onClick={() => closeMenu()}
-            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-          >
-            <IoLogInOutline size={30} />
-            <span className="ml-3 text-xl">Ingresar</span>
-          </Link>
-        )} */}
+        )}
       </nav>
     </div>
   );

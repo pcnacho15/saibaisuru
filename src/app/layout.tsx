@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { firstFont } from "@/config/fonts";
+import { Provider } from "@/provider/Provider";
 
 export const metadata: Metadata = {
   title: "Saibai Suru",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${firstFont.className}`}>{children}</body>
+      <body className={`${firstFont.className}`}>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }

@@ -4,9 +4,9 @@ interface Props {
   };
 }
 
-export default function ({ params }: Props) {
+export default async function ({ params }: Props) {
 
-    const { category } = params;
+    const { category } = await params;
 
     return (
     <div>

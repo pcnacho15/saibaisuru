@@ -14,9 +14,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { BiLogIn } from "react-icons/bi";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import { useSession } from "next-auth/react";
 // import { BiLogIn } from "react-icons/bi";
 
 export const TopMenu = () => {
+  const { data: session } = useSession();
+  const isAuthenticated = !!session?.user;
+
   const openSideMenu = useUiStore((state) => state.openSideMenu);
   //   const totalItems = useCartStore((state) => state.getTotalItems());
   const pathActive = usePathname();
@@ -123,29 +127,31 @@ export const TopMenu = () => {
           </div>
         </Link>
 
-        <Link
-          href="/auth/login"
-          className="text-gray-200 text-sm hover:scale-105 hover:text-white transition-all duration-200 "
-        >
-          <div
-            className={`bg-purple-800 rounded relative inline-flex flex-row justify-center items-center py-1 px-2`}
+        {!isAuthenticated ? (
+          <Link
+            href="/auth/login"
+            className="text-gray-200 text-sm hover:scale-105 hover:text-white transition-all duration-200 "
           >
-            <span>Ingresar</span>
-            <BiLogIn className="w-7 h-7" />
-          </div>
-        </Link>
-
-        {/* <button
-          onClick={() => openSideMenu()}
-          className="rounded-md bg-purple-800 p-1 hover:scale-110 transition-all duration-200"
-        >
-          <Image
-            src={`/icons/user.svg`}
-            alt="user"
-            width={25}
-            height={25}
-          />
-        </button> */}
+            <div
+              className={`bg-purple-800 rounded relative inline-flex flex-row justify-center items-center py-1 px-2`}
+            >
+              <span>Ingresar</span>
+              <BiLogIn className="w-7 h-7" />
+            </div>
+          </Link>
+        ) : (
+          <button
+            onClick={() => openSideMenu()}
+            className="rounded-md bg-purple-800 p-1 hover:scale-110 transition-all duration-200"
+          >
+            <Image
+              src={`/icons/user.svg`}
+              alt="user"
+              width={25}
+              height={25}
+            />
+          </button>
+        )}
       </div>
     </nav>
   );
