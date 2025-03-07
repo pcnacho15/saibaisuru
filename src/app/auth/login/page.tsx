@@ -12,7 +12,7 @@ export default function LoginPage() {
 
       {/* <GitHubLogin /> */}
       <GoogleLogin />
-      <AppleLogin />
+      {/* <AppleLogin /> */}
 
       {/* divisor l ine */}
       <div className="flex items-center my-5">

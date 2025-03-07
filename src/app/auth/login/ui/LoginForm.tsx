@@ -6,8 +6,12 @@ import clsx from "clsx";
 import { authenticate } from "@/actions";
 
 import { IoInformationCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+
+  // const router = useRouter()
+
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
@@ -25,18 +29,18 @@ export const LoginForm = () => {
       action={formAction}
       className="flex flex-col"
     >
-      <div
-        className="flex h-8 items-center mb-2 space-x-1"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {(errorMessage && errorMessage !== 'success')  && (
+      {errorMessage && errorMessage !== "success" && (
+        <div
+          className="flex h-8 items-center mb-2 space-x-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <>
             <IoInformationCircleOutline className="h-5 w-5 text-red-500" />
             <p className="text-base text-red-500">{errorMessage}</p>
           </>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* <label htmlFor="email">Correo electrónico</label> */}
       <input

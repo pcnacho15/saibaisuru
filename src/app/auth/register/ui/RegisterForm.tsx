@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
-// import { authenticate } from "@/modules/auth/actions/login";
 import clsx from "clsx";
 // import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { login, registerUser } from "@/actions";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 type FormInputs = {
   // name: string;
@@ -17,26 +18,30 @@ type FormInputs = {
 
 export const RegisterForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormInputs>();
+
+  const password = useRef({});
+  password.current = watch("password", "");
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setErrorMessage("");
     const { email, password } = data;
 
     // server action
-    // const resp = await registerUser(name, email, password);
+    const resp = await registerUser(email, password);
 
-    // if (!resp.ok) {
-    //   setErrorMessage(resp.message);
-    //   return;
-    // }
+    if (!resp.ok) {
+      setErrorMessage(resp.message);
+      return;
+    }
 
-    // await login(email.toLocaleLowerCase(), password);
+    await login(email.toLocaleLowerCase(), password);
     window.location.replace("/");
   };
 
@@ -45,18 +50,9 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col"
     >
-      {/* <label htmlFor="email">Nombre completo</label>
-      <input
-        className={clsx("px-5 py-2 border bg-gray-200 rounded mb-5", {
-          "border-red-500": errors.name,
-        })}
-        type="text"
-        {...register("name", { required: true })}
-      /> */}
-
       <label htmlFor="email">Correo electrónico</label>
       <input
-        className={clsx("px-5 py-2 border bg-gray-200 rounded mb-5", {
+        className={clsx("px-5 py-2 border-2 bg-gray-200 rounded mb-5", {
           "border-red-500": errors.email,
         })}
         type="email"
@@ -65,7 +61,7 @@ export const RegisterForm = () => {
 
       <label htmlFor="password">Contraseña</label>
       <input
-        className={clsx("px-5 py-2 border bg-gray-200 rounded mb-5", {
+        className={clsx("px-5 py-2 border-2 bg-gray-200 rounded mb-5", {
           "border-red-500": errors.password,
         })}
         type="password"
@@ -74,12 +70,30 @@ export const RegisterForm = () => {
 
       <label htmlFor="password">Confirmar contraseña</label>
       <input
-        className={clsx("px-5 py-2 border bg-gray-200 rounded mb-5", {
+        className={clsx("px-5 py-2 border-2 bg-gray-200 rounded mb-5", {
           "border-red-500": errors.password,
         })}
         type="password"
-        {...register("passwordConfirm", { required: true, minLength: 8 })}
+        {...register("passwordConfirm", {
+          validate: (value) =>
+            value === password.current || "Las contraseñas no coinciden",
+        })}
       />
+
+      {errors.passwordConfirm && (
+        <div
+          className="flex h-8 items-center mb-2 space-x-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <>
+            <IoInformationCircleOutline className="h-5 w-5 text-red-500" />
+            <p className="text-base text-red-500">
+              {errors.passwordConfirm.message}
+            </p>
+          </>
+        </div>
+      )}
 
       <span className="text-red-500">{errorMessage} </span>
 

@@ -32,12 +32,12 @@ export const Sidebar = () => {
   const pathName = usePathname();
 
   const isAuthenticated = !!session?.user;
-  // const isAdmin = session?.user.role === "admin";
+  const isAdmin = session?.user.rol === "admin";
 
-  // const onLogout = async () => {
-  //   await logout();
-  //   window.location.replace(pathName);
-  // };
+  const onLogout = async () => {
+    await logout();
+    window.location.reload();
+  };
 
   return (
     <div>
@@ -145,7 +145,7 @@ export const Sidebar = () => {
           </>
         )}
 
-        {/* {isAdmin && (
+        {isAdmin && (
           <>
             <Link
               href="/"
@@ -175,11 +175,11 @@ export const Sidebar = () => {
 
             <div className="w-full h-px bg-gray-200 my-10"></div>
           </>
-        )} */}
+        )}
 
         {isAuthenticated && (
           <button
-            onClick={() => logout()}
+            onClick={() => onLogout()}
             className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
           >
             <IoLogOutOutline size={30} />

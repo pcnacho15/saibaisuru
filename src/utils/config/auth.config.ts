@@ -1,13 +1,62 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { profile } from "console";
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { z } from "zod";
 
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/login",
     newUser: "/auth/register",
+  },
+  callbacks: {
+    async jwt({ token, user, account, profile }) {
+      if (account?.provider !== "credentials") {
+        if (user) {
+          //* Validar correo en base de datos
+          const emailUser = await prisma.usuarios.findUnique({
+            where: { email: user.email! },
+          });
+
+          if (!emailUser) {
+            //* Crear usuario
+            try {
+              const { clave, ...rest } = await prisma.usuarios.create({
+                data: {
+                  email: user.email!,
+                  email_confirmado: profile?.email_verified || false,
+                  clave: "",
+                  image: user.image,
+                  tipo_login: account?.provider,
+                },
+              });
+              user.id = rest.id;
+              token.data = user;
+              return token;
+            } catch (error) {
+              console.error("Error al crear usuario", error);
+            }
+          }
+
+          user.id = emailUser?.id;
+          token.data = user;
+          return token;
+        }
+      }
+
+      if (user) {
+        token.data = user;
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      // console.log(token.data);
+      session.user = token.data as any;
+      return session;
+    },
   },
   providers: [
     Credentials({
@@ -34,10 +83,12 @@ export const authConfig: NextAuthConfig = {
 
         const { clave, ...rest } = user;
 
-        console.log(rest)
-
         return rest;
       },
+    }),
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
   ],
 };

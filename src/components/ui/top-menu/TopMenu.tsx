@@ -7,15 +7,12 @@ import { useUiStore } from "@/store/uiStore";
 // import { IoSearch } from "react-icons/io5";
 
 // import { useUiStore } from "@/modules";
-// import { BsBasket3 } from "react-icons/bs";
 // import { useCartStore } from "@/modules/cart";
 import { useEffect, useRef, useState } from "react";
-// import { GrBasket } from "react-icons/gr";
 import Image from "next/image";
 import { BiLogIn } from "react-icons/bi";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { useSession } from "next-auth/react";
-// import { BiLogIn } from "react-icons/bi";
 
 export const TopMenu = () => {
   const { data: session } = useSession();
@@ -28,7 +25,10 @@ export const TopMenu = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
 
+
   useEffect(() => {
+
+    
     setLoaded(true);
 
     const handleScroll = () => {
@@ -114,15 +114,6 @@ export const TopMenu = () => {
           className="hover:scale-110 transition-all duration-200"
         >
           <div className={`relative flex justify-center items-center py-1`}>
-            {/* <GrBasket className="w-6 h-6" /> */}
-
-            {/* <Image
-              src={`/icons/cart.svg`}
-              alt="cart"
-              width={25}
-              height={25}
-            /> */}
-
             <HiOutlineShoppingCart className="w-7 h-7" />
           </div>
         </Link>
