@@ -31,25 +31,26 @@ model categorias {
 }
 
 model productos {
-  id            String  @id @default(uuid())
+  id            String     @id @default(uuid())
   titulo        String
+  slug          String     @unique
   descripcion   String
   notas         String
   cantidad      Int
-  precio        Float   @default(0)
+  precio        Float      @default(0)
+  descuento     Int?
   aroma         String
   sabor         String
   contenido     Int
   cosecha_aprox String
-  tipo          Semilla
-
+  tipo_semilla  Semilla
   categoria     categorias @relation(fields: [categorias_id], references: [id])
   categorias_id String
 
   canabinoides      canabinoides[]
   producto_imagenes producto_imagenes[]
 
-  @@index([tipo])
+  @@index([tipo_semilla])
 }
 
 model canabinoides {

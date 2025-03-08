@@ -180,7 +180,7 @@ export const Sidebar = () => {
         {isAuthenticated && (
           <button
             onClick={() => onLogout()}
-            className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            className="flex w-full items-center mt-10 p-2 text-red-600 hover:bg-gray-100 rounded transition-all"
           >
             <IoLogOutOutline size={30} />
             <span className="ml-3 text-xl">Salir</span>

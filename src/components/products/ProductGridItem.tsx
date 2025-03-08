@@ -1,0 +1,123 @@
+"use client"
+
+import { Product } from "@/interfaces/Product";
+import { currencyFormat } from "@/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { RiShoppingBasket2Line } from "react-icons/ri";
+
+interface Props {
+  product: Product;
+}
+
+export const ProductGridItem = ({ product }: Props) => {
+  const [displayImage, setDisplayImage] = useState(product.images[0]);
+  const [posted, setPosted] = useState(false);
+  const [check, setCheck] = useState(false);
+
+  return (
+    <div className="flex flex-col overflow-hidden fade-in w-full h-full">
+      <Link href={`/product/${product.slug}`}>
+        <Image
+          src={`/products/${displayImage}`}
+          alt={product.titulo}
+          className="w-full object-cover rounded"
+          width={400}
+          height={400}
+          //   onMouseEnter={() => setDisplayImage(product.images[1])}
+          //   onMouseLeave={() => setDisplayImage(product.images[0])}
+          priority
+        />
+        {/* <div className="relative bg-lime-600 h-9 text-white font-semibold text-center">
+          <span>40% OFF</span>
+        </div> */}
+      </Link>
+
+      <div className="p-4 flex flex-col gap-5 grow">
+        <div className="flex flex-col grow gap-1">
+          <div className="flex justify-between items-center gap-3">
+            <span className={` uppercase font-base text-gray-400 text-sm`}>
+              {product.tipo_semilla}
+            </span>
+            {/* {product.bateria && (
+              <div className="flex items-center rounded w-auto h-6 lg:h-auto lg:mr-8 pr-1">
+                <MdBatteryCharging90
+                  size={23}
+                  className="text-lime-600"
+                />
+                <span className=" text-sm lg:text-sm text-neutral-700 font-semibold">
+                  {product.bateria}%
+                </span>
+              </div>
+            )} */}
+          </div>
+
+          <Link
+            className="hover:text-purple-600  text-ellipsis"
+            href={`/product/${product.slug}`}
+          >
+            <div className="flex flex-col gap-1">
+              <span className="font-semibold text-lg capitalize">
+                {product.titulo}{" "}
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="flex flex-col xl:flex-row items-start">
+          <div className="flex flex-col">
+            <div className="flex items-center justify-start">
+              <span className={`${!product.descuento && "mb-5"}`}>
+                {currencyFormat(product.precio)}
+              </span>
+              {product.descuento && (
+                <span className="text-xs bg-red-600 rounded text-white px-1 ml-1">
+                  -{product.descuento}%
+                </span>
+              )}
+            </div>
+            {product.descuento && (
+              <span className="text-gray-400 line-through text-sm">
+                {currencyFormat(
+                  (product.precio * product.descuento) / 100 + product.precio
+                )}
+              </span>
+            )}
+          </div>
+          {posted ? (
+            <button
+              type="button"
+              className="fade-in flex items-center text-center text-white justify-center bg-gradient-to-r from-purple-500 to-purple-400 rounded mt-3 lg:mt-0 py-2 w-full xl:w-1/2 m-auto hover:cursor-not-allowed duration-300"
+              disabled
+            >
+              <div className="flex items-center justify-center m-[2.5px]">
+                {check ? (
+                  <FaRegCircleCheck
+                    size={20}
+                    className="fade-in"
+                  />
+                ) : (
+                  <div className="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
+                )}
+              </div>
+            </button>
+          ) : (
+            <button
+              //   onClick={() => addProductCart()}
+              className="fade-in flex items-center text-center text-white justify-center bg-gradient-to-r from-purple-600 to-purple-500 rounded mt-3 lg:mt-0 py-2 w-full xl:w-1/2 m-auto hover:cursor-pointer hover:scale-105 duration-300"
+              disabled={posted}
+            >
+              Agregar
+              <RiShoppingBasket2Line
+                size={25}
+                className="ml-1"
+              />
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

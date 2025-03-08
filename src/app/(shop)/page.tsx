@@ -1,13 +1,35 @@
-export default function Home() {
+import { getPaginatedProductsWithImages } from "@/actions";
+import { ProductGrid, Title } from "@/components";
+import { redirect } from "next/navigation";
+
+interface Props {
+  searchParams: {
+    page?: string;
+  };
+}
+
+export default async function Home({ searchParams }: Props) {
+  const currentParams = await searchParams;
+  const currentPage = currentParams.page ? parseInt(currentParams.page) : 1;
+
+  const { products, totalPages } = await getPaginatedProductsWithImages({
+    page: currentPage,
+  });
+
+  if (products.length <= 0) {
+    redirect("/");
+  }
+
   return (
     <>
-      <div className="flex flex-col gap-5 items-center justify-center h-screen">
-        <span>Hola mundo con fuente por defecto t T</span>
-        <p>
-          Lorem ipsum dolor siT amet consectetur adipisicing elit. Possimus quam
-          et dolores nulla! Veniam reiciendis veritatis est officiis quo modi
-          nemo autem amet eius eum assumenda quis, et alias suscipit.
-        </p>
+      <Title
+        title="Tienda"
+        subtitle="Todos nuestros productos"
+      />
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-full md:w-3/4">
+          <ProductGrid products={products} />
+        </div>
       </div>
     </>
   );
