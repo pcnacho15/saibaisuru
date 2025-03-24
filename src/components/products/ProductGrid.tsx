@@ -11,7 +11,7 @@ export const ProductGrid = ({ products }: Props) => {
 
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="grid grid-cols-2 lg:grid-cols-3 gap-1 md:gap-8">
       {products.map((p) => (
         <ProductGridItem
           key={p.slug}

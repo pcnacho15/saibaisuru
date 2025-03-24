@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import { Product } from "@/interfaces/Product";
-import { currencyFormat } from "@/utils";
+import { CartProduct, Product } from "@/interfaces/Product";
+import { useCartStore } from "@/store/cartStore";
+import { currencyFormat, sleep } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -17,9 +18,45 @@ export const ProductGridItem = ({ product }: Props) => {
   const [posted, setPosted] = useState(false);
   const [check, setCheck] = useState(false);
 
+  const addProductToCart = useCartStore((state) => state.addProductToCart);
+
+  const addProductCart = async () => {
+    setPosted(true);
+
+    await sleep(0.5);
+
+    // if (product.colores.length >= 1) {
+    //   if (!color) {
+    //     // setColorActive(false);
+    //     return;
+    //   }
+    // }
+
+    const cartProduct: CartProduct = {
+      id: product.id,
+      slug: product.slug,
+      title: product.titulo,
+      price: product.precio,
+      quantity: 1,
+      // color: product.color,
+      image: product.images[0],
+    };
+
+    addProductToCart(cartProduct);
+    setCheck(true);
+    await sleep(0.5);
+    setPosted(false);
+    setCheck(false);
+    // setQuantity(1);
+    // console.log({ color, quantity });
+  };
+
   return (
     <div className="flex flex-col overflow-hidden fade-in w-full h-full">
-      <Link href={`/product/${product.slug}`}>
+      <Link
+        href={`/product/${product.slug}`}
+        className="hover:rotate-1 transition-all duration-300"
+      >
         <Image
           src={`/products/${displayImage}`}
           alt={product.titulo}
@@ -41,25 +78,11 @@ export const ProductGridItem = ({ product }: Props) => {
             <span className={` uppercase font-base text-gray-400 text-sm`}>
               {product.tipo_semilla}
             </span>
-            {/* {product.bateria && (
-              <div className="flex items-center rounded w-auto h-6 lg:h-auto lg:mr-8 pr-1">
-                <MdBatteryCharging90
-                  size={23}
-                  className="text-lime-600"
-                />
-                <span className=" text-sm lg:text-sm text-neutral-700 font-semibold">
-                  {product.bateria}%
-                </span>
-              </div>
-            )} */}
           </div>
 
-          <Link
-            className="hover:text-purple-600  text-ellipsis"
-            href={`/product/${product.slug}`}
-          >
+          <Link href={`/product/${product.slug}`}>
             <div className="flex flex-col gap-1">
-              <span className="font-semibold text-lg capitalize">
+              <span className="font-semibold text-lg capitalize hover:text-purple-600 transition-colors duration-300 text-ellipsis">
                 {product.titulo}{" "}
               </span>
             </div>
@@ -105,7 +128,7 @@ export const ProductGridItem = ({ product }: Props) => {
             </button>
           ) : (
             <button
-              //   onClick={() => addProductCart()}
+              onClick={() => addProductCart()}
               className="fade-in flex items-center text-center text-white justify-center bg-gradient-to-r from-purple-600 to-purple-500 rounded mt-3 lg:mt-0 py-2 w-full xl:w-1/2 m-auto hover:cursor-pointer hover:scale-105 duration-300"
               disabled={posted}
             >

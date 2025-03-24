@@ -13,13 +13,14 @@ import Image from "next/image";
 import { BiLogIn } from "react-icons/bi";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { useSession } from "next-auth/react";
+import { useCartStore } from "@/store/cartStore";
 
 export const TopMenu = () => {
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
 
   const openSideMenu = useUiStore((state) => state.openSideMenu);
-  //   const totalItems = useCartStore((state) => state.getTotalItems());
+    const totalItems = useCartStore((state) => state.getTotalItems());
   const pathActive = usePathname();
   const [loaded, setLoaded] = useState(false);
 
@@ -113,9 +114,22 @@ export const TopMenu = () => {
           href="/cart"
           className="hover:scale-110 transition-all duration-200"
         >
-          <div className={`relative flex justify-center items-center py-1`}>
-            <HiOutlineShoppingCart className="w-7 h-7" />
-          </div>
+          {loaded && totalItems > 0 ? (
+            <>
+            <div className="relative">
+              <span className="absolute -top-3 -right-2 bg-principal px-[5px] rounded-full text-sm text-center font-bold text-white">
+                {totalItems}
+              </span>
+
+              <HiOutlineShoppingCart className="w-7 h-7" />
+
+            </div>
+            </>
+          ) : (
+            <div className={`relative flex justify-center items-center py-1`}>
+              <HiOutlineShoppingCart className="w-7 h-7" />
+            </div>
+          )}
         </Link>
 
         {!isAuthenticated ? (

@@ -12,7 +12,7 @@ export default async function AuthLayout({
   }
 
   return (
-    <main className="min-h-screen flex justify-center items-center bg-loginImg bg-no-repeat bg-cover bg-top">
+    <main className="min-h-screen flex justify-center items-center bg-loginImg bg-no-repeat bg-cover bg-top px-5">
       {children}
     </main>
   );

@@ -26,6 +26,16 @@ export interface ProductImage {
   color?: string | null;
 }
 
+export interface CartProduct {
+  id: string;
+  slug: string;
+  title: string;
+  price: number;
+  quantity: number;
+  // color?: string | null;
+  image: string;
+}
+
 
 export type ValidTiposSemillas =
     | "feminizada"

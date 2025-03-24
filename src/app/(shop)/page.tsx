@@ -27,7 +27,7 @@ export default async function Home({ searchParams }: Props) {
         subtitle="Todos nuestros productos"
       />
       <div className="flex flex-col items-center justify-center">
-        <div className="w-full md:w-3/4">
+        <div className="w-full md:w-10/12">
           <ProductGrid products={products} />
         </div>
       </div>
