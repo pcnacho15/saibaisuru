@@ -32,6 +32,7 @@ export interface CartProduct {
   title: string;
   price: number;
   quantity: number;
+  tipoSemilla: string;
   // color?: string | null;
   image: string;
 }

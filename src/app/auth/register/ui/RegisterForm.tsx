@@ -14,6 +14,8 @@ type FormInputs = {
   email: string;
   password: string;
   passwordConfirm: string;
+  firsName: string;
+  lastName: string;
 };
 
 export const RegisterForm = () => {
@@ -31,10 +33,10 @@ export const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setErrorMessage("");
-    const { email, password } = data;
+    const { email, password, firsName, lastName } = data;
 
     // server action
-    const resp = await registerUser(email, password);
+    const resp = await registerUser(email, password, firsName, lastName);
 
     if (!resp.ok) {
       setErrorMessage(resp.message);
@@ -50,37 +52,126 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col"
     >
-      <label htmlFor="email">Correo electrónico</label>
-      <input
-        className={clsx("px-5 py-2 border-2 bg-gray-200 rounded mb-5", {
-          "border-red-500": errors.email,
-        })}
-        type="email"
-        {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
-      />
+      <div className="flex flex-col mb-5">
+        <label
+          htmlFor="email"
+          className="after:content-['*'] after:ml-0.5 after:text-red-500"
+        >
+          Correo electrónico
+        </label>
+        <input
+          className={clsx("px-5 py-2 border-2 bg-gray-200 rounded", {
+            "border-red-500": errors.email,
+          })}
+          type="email"
+          {...register("email", {
+            required: "El email es obligatorio",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "El email que intentas usar es inválido",
+            },
+          })}
+        />
+        {errors.email && (
+          <span className={`text-sm text-red-500`}>{errors.email.message}</span>
+        )}
+      </div>
+      <div className="flex justify-center gap-5  mb-5">
+        <div className="flex flex-col">
+          <label
+            htmlFor="firsName"
+            className="after:content-['*'] after:ml-0.5 after:text-red-500"
+          >
+            Nombre
+          </label>
+          <input
+            className={clsx("px-3 py-2 border-2 bg-gray-200 rounded", {
+              "border-red-500": errors.firsName,
+            })}
+            type="text"
+            {...register("firsName", { required: "El nombre es requerido" })}
+          />
+          {errors.firsName && (
+            <span className={`text-sm text-red-500`}>
+              {errors.firsName.message}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="lastName"
+            className="after:content-['*'] after:ml-0.5 after:text-red-500"
+          >
+            Apellido
+          </label>
+          <input
+            className={clsx("px-3 py-2 border-2 bg-gray-200 rounded", {
+              "border-red-500": errors.lastName,
+            })}
+            type="text"
+            {...register("lastName", { required: "El apellido es requerido" })}
+          />
+          {errors.lastName && (
+            <span className={`text-sm text-red-500`}>
+              {errors.lastName.message}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-center gap-5 mb-5">
+        <div className="flex flex-col">
+          <label
+            htmlFor="password"
+            className="after:content-['*'] after:ml-0.5 after:text-red-500"
+          >
+            Contraseña
+          </label>
+          <input
+            className={clsx("px-3 py-2 border-2 bg-gray-200 rounded", {
+              "border-red-500": errors.password,
+            })}
+            type="password"
+            {...register("password", {
+              required: "La contraseña es requerida",
+              minLength: {
+                value: 8,
+                message: "La contraseña debe tener al menos 8 caracteres",
+              },
+            })}
+          />
+          {errors.password && (
+            <span className={`text-sm text-red-500`}>
+              {errors.password.message}
+            </span>
+          )}
+        </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="password"
+            className="after:content-['*'] after:ml-0.5 after:text-red-500"
+          >
+            Confirmar contraseña
+          </label>
+          <input
+            className={clsx("px-3 py-2 border-2 bg-gray-200 rounded", {
+              "border-red-500": errors.password,
+            })}
+            type="password"
+            {...register("passwordConfirm", {
+              required: "Debes confirmar la contraseña",
+              validate: (value) =>
+                value === password.current || "Las contraseñas no coinciden",
+            })}
+          />
+          {errors.passwordConfirm && (
+            <span className={`text-sm text-red-500`}>
+              {errors.passwordConfirm.message}
+            </span>
+          )}
+        </div>
+      </div>
 
-      <label htmlFor="password">Contraseña</label>
-      <input
-        className={clsx("px-5 py-2 border-2 bg-gray-200 rounded mb-5", {
-          "border-red-500": errors.password,
-        })}
-        type="password"
-        {...register("password", { required: true, minLength: 8 })}
-      />
-
-      <label htmlFor="password">Confirmar contraseña</label>
-      <input
-        className={clsx("px-5 py-2 border-2 bg-gray-200 rounded mb-5", {
-          "border-red-500": errors.password,
-        })}
-        type="password"
-        {...register("passwordConfirm", {
-          validate: (value) =>
-            value === password.current || "Las contraseñas no coinciden",
-        })}
-      />
-
-      {errors.passwordConfirm && (
+      {/* {errors.passwordConfirm && (
         <div
           className="flex h-8 items-center mb-2 space-x-1"
           aria-live="polite"
@@ -93,7 +184,7 @@ export const RegisterForm = () => {
             </p>
           </>
         </div>
-      )}
+      )} */}
 
       <span className="text-red-500">{errorMessage} </span>
 

@@ -21,6 +21,8 @@ interface SeedProduct {
 }
 
 interface SeedUser {
+  nombre: string;
+  apellido: string;
   email: string;
   clave: string;
   rol: "admin" | "user";
@@ -35,11 +37,15 @@ interface SeedData {
 export const initialData: SeedData = {
   usuarios: [
     {
+      nombre: "Nacho",
+      apellido: "Martinez",
       email: "nacho@google.com",
       clave: bcryptjs.hashSync("123456"),
       rol: "admin",
     },
     {
+      nombre: "Tom",
+      apellido: "Soto",
       email: "tom@google.com",
       clave: bcryptjs.hashSync("123456"),
       rol: "user",

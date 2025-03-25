@@ -13,8 +13,8 @@ export default function ShopLayout({
         <TopMenu />
         <Sidebar />
         <div className="px-5 sm:px-10 mb-20 pt-16">{children}</div>
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

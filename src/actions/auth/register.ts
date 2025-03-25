@@ -4,14 +4,15 @@ import prisma from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
 
 
-export const registerUser = async( email: string, password: string ) => {
+export const registerUser = async( email: string, password: string, firstName: string, lastName: string ) => {
 
     try {
         
         const registerUser = await prisma.usuarios.create({
           data: {
-            // name,
-            email,
+            nombre: firstName.toLowerCase(),
+            apellido: lastName.toLowerCase(),
+            email: email.toLowerCase(),
             clave: bcryptjs.hashSync( password ),
           },
           select: {

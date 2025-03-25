@@ -66,35 +66,32 @@ export const TopMenu = () => {
       {/* Opciones de Menu */}
       <div className="hidden md:block text-sm">
         <Link
-          className={`m-2 p-2 rounded-md font-semibold ${
-            pathActive === "/" && "text-principal transition-all duration-200"
+          className={`m-2 p-2 rounded-md font-semibold hover:text-purple-900 transition-all duration-200 ${
+            pathActive === "/" && "text-principal"
           }`}
           href="/"
         >
           Inicio
         </Link>
         <Link
-          className={`m-2 p-2 rounded-md transition-all font-semibold ${
-            pathActive === "/categories/semillas" &&
-            "text-purple-900 transition-all duration-200"
+          className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
+            pathActive === "/categories/semillas" && "text-purple-900"
           }`}
           href="/categories/semillas"
         >
           Semillas
         </Link>
         <Link
-          className={`m-2 p-2 rounded-md transition-all font-semibold ${
-            pathActive === "/categories/esquejes" &&
-            "text-principal transition-all duration-200"
+          className={`m-2 p-2 rounded-md hover:text-purple-900 transition-all duration-200 font-semibold ${
+            pathActive === "/categories/esquejes" && "text-principal"
           }`}
           href="/categories/esquejes"
         >
           Esquejes
         </Link>
         <Link
-          className={`m-2 p-2 rounded-md transition-all font-semibold ${
-            pathActive === "/categories/cultivo" &&
-            "text-purple-900 transition-all duration-200"
+          className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
+            pathActive === "/categories/cultivo" && "text-purple-900"
           }`}
           href="/categories/cultivo"
         >
@@ -116,14 +113,13 @@ export const TopMenu = () => {
         >
           {loaded && totalItems > 0 ? (
             <>
-            <div className="relative">
-              <span className="absolute -top-3 -right-2 bg-principal px-[5px] rounded-full text-sm text-center font-bold text-white">
-                {totalItems}
-              </span>
+              <div className="relative">
+                <span className="absolute -top-2 -right-1 bg-principal px-[5px] rounded-full text-xs text-center font-bold text-white">
+                  {totalItems}
+                </span>
 
-              <HiOutlineShoppingCart className="w-7 h-7" />
-
-            </div>
+                <HiOutlineShoppingCart className="w-7 h-7" />
+              </div>
             </>
           ) : (
             <div className={`relative flex justify-center items-center py-1`}>

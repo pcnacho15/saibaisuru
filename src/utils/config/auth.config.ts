@@ -24,6 +24,8 @@ export const authConfig: NextAuthConfig = {
             try {
               const { clave, ...rest } = await prisma.usuarios.create({
                 data: {
+                  nombre: profile?.given_name?.toLowerCase() || '',
+                  apellido: profile?.family_name?.toLowerCase() || '',
                   email: user.email!,
                   email_confirmado: profile?.email_verified || false,
                   clave: "",
@@ -32,6 +34,7 @@ export const authConfig: NextAuthConfig = {
                 },
               });
               user.id = rest.id;
+              console.log(user)
               token.data = user;
               return token;
             } catch (error) {

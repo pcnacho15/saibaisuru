@@ -44,7 +44,7 @@ export const LoginForm = () => {
 
       {/* <label htmlFor="email">Correo electrónico</label> */}
       <input
-        className="px-5 py-2 border border-gray-400 rounded mb-5 w-full"
+        className="px-5 py-2 border border-gray-400 rounded mb-5 w-full "
         type="email"
         name="email"
         placeholder="Correo"

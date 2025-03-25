@@ -20,6 +20,9 @@ import {
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { logout } from "@/actions";
+import { RiSeedlingLine } from "react-icons/ri";
+import { MdOutlineLocalFlorist } from "react-icons/md";
+import { PiShovel } from "react-icons/pi";
 
 export const Sidebar = () => {
 
@@ -101,10 +104,10 @@ export const Sidebar = () => {
               pathName === "/categories/celulares" &&
               "bg-gray-100 font-semibold"
             }`}
-            href="/categories/celulares"
+            href="/categories/semillas"
           >
-            <IoPhonePortraitOutline size={30} />
-            <span>Celulares</span>
+            <RiSeedlingLine size={30} />
+            <span>Semillas</span>
           </Link>
           <Link
             onClick={() => closeMenu()}
@@ -112,10 +115,20 @@ export const Sidebar = () => {
               pathName === "/categories/accesorios" &&
               "bg-gray-100 font-semibold"
             }`}
-            href="/categories/accesorios"
+            href="/categories/esquejes"
           >
-            <IoBulbOutline size={30} />
-            <span>Accesorios</span>
+            <MdOutlineLocalFlorist size={30} />
+            <span>Esquejes</span>
+          </Link>
+          <Link
+            className={`flex items-center gap-3 text-xl mt-10 p-2 rounded transition-all ${
+              pathName === "/categories/accesorios" &&
+              "bg-gray-100 font-semibold"
+            }`}
+            href="/categories/cultivo"
+          >
+            <PiShovel size={30} />
+            Cultivo
           </Link>
           {/* Separador */}
           <div className="w-full h-px bg-gray-200 my-10"></div>

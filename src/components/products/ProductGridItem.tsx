@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { RiShoppingBasket2Line } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 interface Props {
   product: Product;
@@ -38,12 +39,17 @@ export const ProductGridItem = ({ product }: Props) => {
       title: product.titulo,
       price: product.precio,
       quantity: 1,
+      tipoSemilla: product.tipo_semilla,
       // color: product.color,
       image: product.images[0],
     };
 
     addProductToCart(cartProduct);
     setCheck(true);
+    toast("🦄 ¡Producto agregado al carrito!", {
+      position: "top-right",
+      autoClose: 1000,
+    });
     await sleep(0.5);
     setPosted(false);
     setCheck(false);

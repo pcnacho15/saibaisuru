@@ -1,9 +1,18 @@
 import { initialData } from "./seed";
 
 import prisma from "../lib/prisma";
+import { departamentos } from "./seed-departamentos";
+import { municipios } from "./seed-municipios";
 
 async function main() {
   //* 1. Borrar registros previos
+
+  await prisma.municipios.deleteMany();
+  await prisma.departamentos.deleteMany();
+
+  await prisma.order_adress.deleteMany();
+  await prisma.order_detalle.deleteMany();
+  await prisma.order.deleteMany();
 
   await prisma.producto_imagenes.deleteMany();
   await prisma.productos.deleteMany();
@@ -15,6 +24,14 @@ async function main() {
   await prisma.usuarios.createMany({
     data: usuarios,
   }); //? Crear usuarios
+
+  await prisma.departamentos.createMany({
+    data: departamentos,
+  });
+
+  await prisma.municipios.createMany({
+    data: municipios,
+  });
 
   const categoriasData = initialData.categorias!.map((categoria) => ({
     nombre: categoria,

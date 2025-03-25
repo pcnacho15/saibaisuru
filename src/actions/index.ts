@@ -15,3 +15,7 @@ export * from "./product/get-product-stock";
 
 //* Categories
 export * from "./categories/categoryActions";
+
+//* Checkout
+export * from "./checkout/get-departments";
+export * from "./checkout/get-municipios";

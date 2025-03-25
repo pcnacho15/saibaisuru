@@ -24,6 +24,18 @@ enum Semilla {
   automatica
 }
 
+enum EstadoOrder {
+  pendiente
+  pagada
+  rechazada
+}
+
+enum EstadoEnvio {
+  entregado
+  enviado
+  enviando
+}
+
 model categorias {
   id        String      @id @default(uuid())
   nombre    String      @unique
@@ -49,6 +61,7 @@ model productos {
 
   canabinoides      canabinoides[]
   producto_imagenes producto_imagenes[]
+  order_detalle     order_detalle[]
 
   @@index([tipo_semilla])
 }
@@ -78,10 +91,96 @@ model usuarios {
   id               String   @id @default(uuid())
   email            String   @unique
   email_confirmado Boolean  @default(false)
+  nombre           String
+  apellido         String
   clave            String
   rol              Rol      @default(user)
   image            String?
   tipo_login       String   @default("credentials")
-  fecha_creacion   DateTime @default(now())
+  pais             String   @default("Colombia")
+  direccion        String?
+  direccion2       String?
+  fecha_crea       DateTime @default(now())
   fecha_actualiza  DateTime @default(now())
+
+  Order        order[]
+  municipios   municipios? @relation(fields: [municipiosId], references: [id])
+  municipiosId Int?
+}
+
+model order {
+  id             String      @id @default(uuid())
+  sub_total      Float
+  tax            Float?      @default(0)
+  // tipo_envio     Boolean?
+  estado_order   EstadoOrder @default(pendiente)
+  estado_envio   EstadoEnvio @default(enviando)
+  costo_envio    Float?      @default(0)
+  total          Float
+  items_in_order Int
+  fecha_pago     String?
+
+  fecha_crea      DateTime @default(now())
+  fecha_actualiza DateTime @updatedAt
+
+  // Relaciones
+  usuario    usuarios? @relation(fields: [usuario_id], references: [id])
+  usuario_id String?
+
+  OrderDetalle order_detalle[]
+  OrderAdress  order_adress?
+
+  transaction_id String?
+  ref_epayco     String?
+}
+
+model order_detalle {
+  id       String @id @default(uuid())
+  cantidad Int
+  precio   Float
+  // color    String
+
+  // Relaciones
+  order    order  @relation(fields: [order_id], references: [id])
+  order_id String
+
+  producto    productos @relation(fields: [producto_id], references: [id])
+  producto_id String
+}
+
+model order_adress {
+  id              String  @id @default(uuid())
+  correo          String
+  nombres         String
+  apellidos       String
+  tipoDocumento   String
+  numeroDocumento String
+  departamento    String
+  municipio       String
+  direccion       String
+  direccion2      String?
+  // codigoPostal    String
+  // ciudad          String
+  // pais            String
+  telefono        String
+
+  // Relaciones
+  order    order  @relation(fields: [order_id], references: [id])
+  order_id String @unique
+}
+
+model departamentos {
+  id        Int          @id
+  nombre    String
+  Municipio municipios[]
+}
+
+model municipios {
+  id     Int    @id
+  nombre String
+
+  // Relaciones
+  departamento    departamentos @relation(fields: [departamento_id], references: [id])
+  departamento_id Int
+  User            usuarios[]
 }
