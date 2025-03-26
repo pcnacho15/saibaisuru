@@ -23,6 +23,7 @@ import { logout } from "@/actions";
 import { RiSeedlingLine } from "react-icons/ri";
 import { MdOutlineLocalFlorist } from "react-icons/md";
 import { PiShovel } from "react-icons/pi";
+import { BiLogIn } from "react-icons/bi";
 
 export const Sidebar = () => {
 
@@ -72,7 +73,7 @@ export const Sidebar = () => {
           onClick={() => closeMenu()}
         />
         {/* Input de busquedad */}
-        <div className="relative mt-14">
+        {/* <div className="relative mt-14">
           <IoSearchOutline
             size={20}
             className="absolute top-2 left-2"
@@ -82,7 +83,7 @@ export const Sidebar = () => {
             placeholder="Buscar"
             className="w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-blue-500"
           />
-        </div>
+        </div> */}
 
         {/* Menú */}
 
@@ -121,6 +122,7 @@ export const Sidebar = () => {
             <span>Esquejes</span>
           </Link>
           <Link
+            onClick={() => closeMenu()}
             className={`flex items-center gap-3 text-xl mt-10 p-2 rounded transition-all ${
               pathName === "/categories/accesorios" &&
               "bg-gray-100 font-semibold"
@@ -190,14 +192,22 @@ export const Sidebar = () => {
           </>
         )}
 
-        {isAuthenticated && (
+        {isAuthenticated ? (
           <button
             onClick={() => onLogout()}
-            className="flex w-full items-center mt-10 p-2 text-red-600 hover:bg-gray-100 rounded transition-all"
+            className="flex w-full items-center p-2 text-red-600 bg-gray-50 hover:bg-gray-100 rounded transition-all"
           >
             <IoLogOutOutline size={30} />
-            <span className="ml-3 text-xl">Salir</span>
+            <span className="ml-1 text-xl">Salir</span>
           </button>
+        ) : (
+          <Link
+            href="/auth/login"
+            className="flex w-full items-center p-2 text-blue-600 bg-gray-50 hover:bg-gray-100 rounded transition-all"
+          >
+            <span className="ml-1 text-xl">Ingresar</span>
+            <BiLogIn size={30} />
+          </Link>
         )}
       </nav>
     </div>

@@ -1,27 +1,26 @@
 import prisma from "@/lib/prisma";
 
-interface Filters {
-  categoria: string;
-}
 
-export const getFiltersProduct = async ({ categoria }: Filters) => {
+export const getFiltersProduct = async (categoria: string ) => {
 
-  let tipos;
 
   if(categoria === "semillas") {
-    tipos = await prisma.productos.findMany({
-      select: {
-        tipo_semilla: true,
-      },
-      distinct: ["tipo_semilla"],
-    });
-
+    
   }
+
+  const tipoSemillas = await prisma.productos.findMany({
+    select: {
+      tipo_semilla: true,
+    },
+    distinct: ["tipo_semilla"],
+  });
+
+  return {
+    tipoSemillas,
+  };
+
 
   
-  return {
-    tipos
-  }
-
+  
   
 };

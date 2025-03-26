@@ -10,7 +10,7 @@ import { useUiStore } from "@/store/uiStore";
 // import { useCartStore } from "@/modules/cart";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { BiLogIn } from "react-icons/bi";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cartStore";
@@ -129,17 +129,17 @@ export const TopMenu = () => {
         </Link>
 
         {!isAuthenticated ? (
-          <Link
-            href="/auth/login"
+          <button
+            onClick={() => openSideMenu()}
             className="text-gray-200 text-sm hover:scale-105 hover:text-white transition-all duration-200 "
           >
             <div
-              className={`bg-purple-800 rounded relative inline-flex flex-row justify-center items-center py-1 px-2`}
+              className={`bg-purple-800 rounded relative inline-flex flex-row gap-1 justify-center items-center py-2 px-2`}
             >
-              <span>Ingresar</span>
-              <BiLogIn className="w-7 h-7" />
+              <span>Menú</span>
+              <RxHamburgerMenu size={20} />
             </div>
-          </Link>
+          </button>
         ) : (
           <button
             onClick={() => openSideMenu()}

@@ -1,5 +1,3 @@
-
-
 export interface Product {
   id: string;
   titulo: string;
@@ -37,8 +35,11 @@ export interface CartProduct {
   image: string;
 }
 
+export type ValidTiposSemillas = "feminizada" | "automatica" | "regular";
 
-export type ValidTiposSemillas =
-    | "feminizada"
-    | "automatica"
-    | "regular"
+export type ValidTipoCultivo =
+  | "indoor"
+  | "macetas"
+  | "fertilizantes"
+  | "sustratos"
+  | "insecticidas";
