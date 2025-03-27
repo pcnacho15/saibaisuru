@@ -14,6 +14,11 @@ export const getProductsRelationByMarca = async (id: string) => {
             url: "asc",
           },
         },
+        subCategoria: {
+          select: {
+            nombre: true
+          }
+        }
       },
       where: {
         // marca: marca,

@@ -1,7 +1,14 @@
 import bcryptjs from "bcryptjs";
 
 type ValidCategories = "semillas" | "esquejes" | "cultivo" | "otros";
-type ValidTypes = "feminizada" | "automatica" | "regular";
+type ValidTypes =
+  | "feminizada"
+  | "automatica"
+  | "regular"
+  | "indoor"
+  | "maceta"
+  | "sustrato"
+  | "insecticida";
 
 interface SeedProduct {
   titulo: string;
@@ -13,7 +20,7 @@ interface SeedProduct {
   sabor: string;
   contenido: number;
   cosecha_aprox: string;
-  tipo_semilla: ValidTypes;
+  sub_categoria: ValidTypes;
   descuento?: number;
   slug: string;
   categoria: ValidCategories;
@@ -28,10 +35,16 @@ interface SeedUser {
   rol: "admin" | "user";
 }
 
+interface SeedSubCategory {
+  nombre: string;
+  category: ValidCategories
+}
+
 interface SeedData {
   usuarios: SeedUser[];
   productos: SeedProduct[];
   categorias?: string[];
+  subCategorias?: SeedSubCategory[];
 }
 
 export const initialData: SeedData = {
@@ -52,6 +65,36 @@ export const initialData: SeedData = {
     },
   ],
   categorias: ["semillas", "esquejes", "cultivo"],
+  subCategorias: [
+    {
+      nombre: "feminizada",
+      category: "semillas",
+    },
+    {
+      nombre: "automatica",
+      category: "semillas",
+    },
+    {
+      nombre: "regular",
+      category: "semillas",
+    },
+    {
+      nombre: "indoor",
+      category: "cultivo",
+    },
+    {
+      nombre: "maceta",
+      category: "cultivo",
+    },
+    {
+      nombre: "insecticida",
+      category: "cultivo",
+    },
+    {
+      nombre: "sustrato",
+      category: "cultivo",
+    },
+  ],
   productos: [
     {
       titulo: "calima",
@@ -66,7 +109,7 @@ export const initialData: SeedData = {
       contenido: 3,
       cosecha_aprox:
         "60 días 406g de flor seca por planta de 1m² y 1.5m de altura",
-      tipo_semilla: "feminizada",
+      sub_categoria: "feminizada",
       // descuento: 0,
       slug: "semilla-calima-feminizada",
       categoria: "semillas",
@@ -84,7 +127,7 @@ export const initialData: SeedData = {
       sabor: "Ácido a fresas con tonos floral y frutal.",
       contenido: 3,
       cosecha_aprox: "60 días 312g flor seca por planta de 1m² y 2m de altura",
-      tipo_semilla: "feminizada",
+      sub_categoria: "feminizada",
       // descuento: 0,
       slug: "semilla-fresas-rosas-feminizada",
       categoria: "semillas",
@@ -107,7 +150,7 @@ export const initialData: SeedData = {
       contenido: 3,
       cosecha_aprox:
         "60 días 340g de flor seca por planta de 1m² y 1.5m de altura",
-      tipo_semilla: "feminizada",
+      sub_categoria: "feminizada",
       // descuento: 0,
       slug: "semilla-salam-feminizada",
       categoria: "semillas",

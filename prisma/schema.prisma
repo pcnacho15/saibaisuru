@@ -18,10 +18,14 @@ enum Rol {
   user
 }
 
-enum Semilla {
+enum TipoProducto {
   feminizada
-  regular
   automatica
+  regular
+  indoor
+  maceta
+  sustrato
+  insecticida
 }
 
 enum EstadoOrder {
@@ -37,9 +41,19 @@ enum EstadoEnvio {
 }
 
 model categorias {
-  id        String      @id @default(uuid())
-  nombre    String      @unique
-  productos productos[]
+  id             String           @id @default(uuid())
+  nombre         String           @unique
+  productos      productos[]
+  sub_cagegorias sub_cagegorias[]
+}
+
+model sub_cagegorias {
+  id     String @id @default(uuid())
+  nombre String
+
+  categoria    categorias  @relation(fields: [categoras_id], references: [id])
+  categoras_id String
+  productos    productos[]
 }
 
 model productos {
@@ -55,15 +69,20 @@ model productos {
   sabor         String
   contenido     Int
   cosecha_aprox String
-  tipo_semilla  Semilla
+  // tipo_producto TipoProducto
+
+  //* Relaciones
   categoria     categorias @relation(fields: [categorias_id], references: [id])
   categorias_id String
+
+  subCategoria      sub_cagegorias @relation(fields: [sub_categorias_id], references: [id])
+  sub_categorias_id String
 
   canabinoides      canabinoides[]
   producto_imagenes producto_imagenes[]
   order_detalle     order_detalle[]
 
-  @@index([tipo_semilla])
+  // @@index([tipo_producto])
 }
 
 model canabinoides {

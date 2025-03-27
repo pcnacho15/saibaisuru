@@ -29,7 +29,17 @@ export const getPaginatedProductsWithImages = async ({
           },
           orderBy: {
             url: "asc",
-          }
+          },
+        },
+        subCategoria: {
+          select: {
+            nombre: true,
+          },
+        },
+        categoria: {
+          select: {
+            nombre: true,
+          },
         },
       },
       where: {

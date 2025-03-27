@@ -9,7 +9,7 @@ export interface Product {
   sabor: string;
   contenido: number;
   cosecha_aprox: string;
-  tipo_semilla: ValidTiposSemillas;
+  subCategoria: {nombre: string};
   descuento?: number | null;
   slug: string;
   images: string[];
@@ -30,16 +30,16 @@ export interface CartProduct {
   title: string;
   price: number;
   quantity: number;
-  tipoSemilla: string;
+  tipoProducto: string;
   // color?: string | null;
   image: string;
 }
 
-export type ValidTiposSemillas = "feminizada" | "automatica" | "regular";
-
-export type ValidTipoCultivo =
+type ValidTypes =
+  | "feminizada"
+  | "automatica"
+  | "regular"
   | "indoor"
-  | "macetas"
-  | "fertilizantes"
-  | "sustratos"
-  | "insecticidas";
+  | "maceta"
+  | "sustrato"
+  | "insecticida";

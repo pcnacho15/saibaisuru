@@ -14,22 +14,20 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cartStore";
+import { BiLogIn } from "react-icons/bi";
 
 export const TopMenu = () => {
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
 
   const openSideMenu = useUiStore((state) => state.openSideMenu);
-    const totalItems = useCartStore((state) => state.getTotalItems());
+  const totalItems = useCartStore((state) => state.getTotalItems());
   const pathActive = usePathname();
   const [loaded, setLoaded] = useState(false);
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-
   useEffect(() => {
-
-    
     setLoaded(true);
 
     const handleScroll = () => {
@@ -129,17 +127,28 @@ export const TopMenu = () => {
         </Link>
 
         {!isAuthenticated ? (
-          <button
-            onClick={() => openSideMenu()}
-            className="text-gray-200 text-sm hover:scale-105 hover:text-white transition-all duration-200 "
-          >
-            <div
-              className={`bg-purple-800 rounded relative inline-flex flex-row gap-1 justify-center items-center py-2 px-2`}
+          <>
+            <button
+              onClick={() => openSideMenu()}
+              className="block md:hidden text-gray-200 text-sm hover:scale-105 hover:text-white transition-all duration-200 "
             >
-              <span>Menú</span>
-              <RxHamburgerMenu size={20} />
-            </div>
-          </button>
+              <div
+                className={`bg-purple-800 rounded relative inline-flex flex-row gap-1 justify-center items-center py-2 px-2`}
+              >
+                <span>Menú</span>
+                <RxHamburgerMenu size={20} />
+              </div>
+            </button>
+            <Link
+              href="/auth/login"
+              className="hidden md:block"
+            >
+              <div className="flex items-center text-white bg-purple-900 rounded py-2 px-1">
+                <span className="ml-1 text-sm">Ingresar</span>
+                <BiLogIn size={20} />
+              </div>
+            </Link>
+          </>
         ) : (
           <button
             onClick={() => openSideMenu()}

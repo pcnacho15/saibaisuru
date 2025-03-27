@@ -36,6 +36,7 @@ async function main() {
   const categoriasData = initialData.categorias!.map((categoria) => ({
     nombre: categoria,
   }));
+  
   await prisma.categorias.createMany({
     data: categoriasData,
   }); //? Crear categorias
@@ -46,14 +47,30 @@ async function main() {
     return map;
   }, {} as Record<string, string>);
 
+  initialData.subCategorias?.forEach(async (subCategory) => {
+    const { nombre, category } = subCategory;
+    await prisma.sub_cagegorias.create({
+      data: {
+        nombre,
+        categoras_id: categoriesMap[category]
+      }
+    })
+  })
+
+  const subCategoriesDB = await prisma.sub_cagegorias.findMany();
+  const subCategoriesMap = subCategoriesDB.reduce((map, subCategory) => {
+    map[subCategory.nombre] = subCategory.id;
+    return map;
+  }, {} as Record<string, string>);
 
   initialData.productos.forEach(async (producto) => {
-    const { categoria, imagenes, ...resto } = producto;
+    const { categoria, sub_categoria, imagenes, ...resto } = producto;
     
     const dpProducto = await prisma.productos.create({
       data: {
         ...resto,
         categorias_id: categoriesMap[categoria],
+        sub_categorias_id: subCategoriesMap[sub_categoria],
       },
     });
 

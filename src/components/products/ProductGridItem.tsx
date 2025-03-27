@@ -39,7 +39,7 @@ export const ProductGridItem = ({ product }: Props) => {
       title: product.titulo,
       price: product.precio,
       quantity: 1,
-      tipoSemilla: product.tipo_semilla,
+      tipoProducto: product.subCategoria.nombre,
       // color: product.color,
       image: product.images[0],
     };
@@ -82,7 +82,7 @@ export const ProductGridItem = ({ product }: Props) => {
         <div className="flex flex-col grow gap-1">
           <div className="flex justify-between items-center gap-3">
             <span className={` uppercase font-base text-gray-400 text-sm`}>
-              {product.tipo_semilla}
+              {product.subCategoria.nombre}
             </span>
           </div>
 

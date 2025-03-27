@@ -90,9 +90,11 @@ export default async function ProductPage(props: { params: Params }) {
               ({product.color})
             </span>{" "} */}
           </h1>
-          <span className="capitalize text-base font-semibold text-gray-400 mt-1">
-            {product.tipo_semilla}
-          </span>
+          {product.categoria.nombre === "semillas" && (
+            <span className="capitalize text-base font-semibold text-gray-400 mt-1">
+              {product.subCategoria.nombre}
+            </span>
+          )}
           {product.contenido && (
             <div className="flex items-center w-full justify-start gap-2 rounded h-6 lg:h-auto lg:mr-8 pr-1 mt-5">
               <span className="text-base text-neutral-700 font-semibold">

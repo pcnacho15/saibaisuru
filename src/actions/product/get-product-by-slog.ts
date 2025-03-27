@@ -12,7 +12,17 @@ export const getProductBySlug = async (slug: string) => {
           },
           orderBy: {
             url: "asc",
-          }
+          },
+        },
+        subCategoria: {
+          select: {
+            nombre: true,
+          },
+        },
+        categoria: {
+          select: {
+            nombre: true,
+          },
         },
       },
       where: {

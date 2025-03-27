@@ -16,3 +16,11 @@ export const getCategoryWithId = async({ category }: Props) => {
 
     return categoryDb;
 }
+
+export const getCategories = async() => {
+
+  const categories = await prisma.categorias.findMany()
+
+  return categories;
+
+}
