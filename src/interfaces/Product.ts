@@ -5,8 +5,8 @@ export interface Product {
   notas: string;
   cantidad: number;
   precio: number;
-  aroma: string;
-  sabor: string;
+  aroma?: string | null;
+  sabor?: string | null;
   contenido: number;
   cosecha_aprox: string;
   subCategoria: {nombre: string};

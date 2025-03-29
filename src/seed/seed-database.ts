@@ -52,7 +52,7 @@ async function main() {
     await prisma.sub_cagegorias.create({
       data: {
         nombre,
-        categoras_id: categoriesMap[category]
+        categorias_id: categoriesMap[category]
       }
     })
   })
