@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+// import { NextApiResponse } from "next";
 import { EstadoOrder, PrismaClient } from "@prisma/client"; // Si usas Prisma para la BD
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,7 +15,7 @@ export const config = {
   },
 };
 
-export async function POST(req: NextRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
     return NextResponse.json({ error: "Método no permitido" }, { status: 405 });
   }
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       x_transaction_state, // Estado de la transacción
       x_amount, // Monto pagado
       x_currency_code, // Moneda
-      x_customer_email, // Correo del comprador
+      // x_customer_email, // Correo del comprador
       x_id_factura, // ID de la orden en tu BD
       x_fecha_transaccion,
       x_transaction_id,

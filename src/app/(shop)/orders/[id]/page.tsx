@@ -1,12 +1,12 @@
 // import Link from "next/link";
 
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { currencyFormat } from "@/utils";
 import prisma from "@/lib/prisma";
 import { getOrderById } from "@/actions/orders/get-order-by-id";
 import { OrderStatus } from "@/components/orders/OrderStatus";
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 // import { createPreferenceMP } from "@/modules/pagos/actions/mercado-pago/create-prefecence";
 // import { MercadoPagoButton } from "@/modules/pagos/components/MercadoPagoButton";
 
@@ -33,7 +33,7 @@ export default async function OrderPage(props: {
 
   const refTransaction = currentParams.ref_payco;
 
-  let { ok, order } = await getOrderById(id);
+  const { ok, order } = await getOrderById(id);
 
   if (!ok) {
     redirect("/");
@@ -73,8 +73,8 @@ export default async function OrderPage(props: {
                   key={item.producto.slug}
                   className="flex mb-5 bg-white p-3 rounded-xl shadow-lg"
                 >
-                  <Image
-                    src={`/products/${item.producto.producto_imagenes[0].url}`}
+                  <ProductImage
+                    src={item.producto.producto_imagenes[0].url}
                     width={100}
                     height={100}
                     style={{

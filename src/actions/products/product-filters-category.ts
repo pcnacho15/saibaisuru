@@ -9,10 +9,16 @@ export const getFiltersProduct = async (categoria: string ) => {
   }
 
   const tipoSemillas = await prisma.productos.findMany({
-    select: {
-      tipo_semilla: true,
+    include: {
+      subCategoria: {
+        select: { 
+          nombre: true
+        },
+        
+      },
+      
     },
-    distinct: ["tipo_semilla"],
+    distinct: ['sub_categorias_id']
   });
 
   return {

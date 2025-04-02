@@ -1,33 +1,21 @@
 "use client";
 
+import { createUpdateProduct } from "@/actions/product/create-update-products";
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { Categoria, SubCategoria } from "@/interfaces/Category";
-import { Product } from "@/interfaces/Product";
-import { useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-
+import {
+  Product,
+  producto_imagenes as ProductWithImage,
+} from "@/interfaces/Product";
+// import { useRouter } from "next/navigation";
+// import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
-  product: Product;
+  product: Partial<Product> & { producto_imagenes?: ProductWithImage[] };
   categories: Categoria[];
   subCategories: SubCategoria[];
 }
-
-
-// id;
-// titulo;
-// descripcion;
-// notas;
-// cantidad;
-// precio;
-// aroma;
-// sabor;
-// contenido;
-// cosecha_aprox;
-// subCategoria;
-// descuento;
-// slug;
-// images;
-// categorias_id;
 
 interface FormInputs {
   titulo: string;
@@ -37,50 +25,78 @@ interface FormInputs {
   // aroma: string;
   precio: number;
   cantidad: number;
-  sizes: string[];
-  tags: string;
-  gender: "men" | "women" | "kid" | "unisex";
-  categoryId: string;
+  contenido: number | null;
+  cosecha_aprox: string | null;
+  descuento: number | null;
+  categorias_id: string;
+  sub_categorias_id: string;
 
   images?: FileList;
 }
 
 export const ProductForm = ({ product, categories, subCategories }: Props) => {
+  // const router = useRouter();
+  // const [errorMessage, setErrorMessage] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState("");
-  
   const {
     handleSubmit,
     register,
-    formState: { isValid },
-    getValues,
-    setValue,
-    watch,
+    // formState: { isValid },
+    // getValues,
+    // setValue,
+    // watch,
   } = useForm<FormInputs>({
     defaultValues: {
       ...product,
       images: undefined,
     },
   });
-  
-    const password = useRef({});
-    // password.current = watch("password", "");
-  
-    const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-      // setErrorMessage("");
-      // const { email, password, firsName, lastName } = data;
-      // // server action
-      // const resp = await registerUser(email, password, firsName, lastName);
-      // if (!resp.ok) {
-      //   setErrorMessage(resp.message);
-      //   return;
-      // }
-      // await login(email.toLocaleLowerCase(), password);
-      // window.location.replace("/");
-    };
+
+  const onSubmit = async (data: FormInputs) => {
+    const formData = new FormData();
+
+    const { images, ...productToSave } = data;
+
+    if (product.id) {
+      formData.append("id", product.id ?? "");
+    }
+
+    formData.append("titulo", productToSave.titulo);
+    formData.append("slug", productToSave.slug);
+    formData.append("descripcion", productToSave.descripcion);
+    formData.append("precio", productToSave.precio.toString());
+    formData.append("cantidad", productToSave.cantidad.toString());
+    formData.append("notas", productToSave.notas);
+    formData.append("contenido", productToSave.contenido?.toString() ?? "");
+    formData.append(
+      "cosecha_aprox",
+      productToSave.cosecha_aprox?.toString() ?? ""
+    );
+    formData.append("descuento", productToSave.descuento?.toString() ?? "");
+    formData.append("categorias_id", productToSave.categorias_id);
+    formData.append("sub_categorias_id", productToSave.sub_categorias_id);
+
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+    }
+
+    /*const { ok, product: updatedProduct } =*/ await createUpdateProduct(formData);
+
+    // if (!ok) {
+    //   alert("Producto no se pudo actualizar");
+    //   return;
+    // }
+
+    // router.replace(`/admin/product/${updatedProduct?.slug}`);
+  };
 
   return (
-    <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3"
+    >
       {/* Textos */}
       <div className="w-full">
         <div className="flex flex-col mb-2">
@@ -88,6 +104,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
           <input
             type="text"
             className="p-2 border rounded-md bg-gray-200"
+            {...register("titulo", { required: true })}
           />
         </div>
 
@@ -96,6 +113,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
           <input
             type="text"
             className="p-2 border rounded-md bg-gray-200"
+            {...register("slug", { required: true })}
           />
         </div>
 
@@ -104,94 +122,146 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
           <textarea
             rows={2}
             className="p-2 border rounded-md bg-gray-200"
+            {...register("descripcion", { required: true })}
           ></textarea>
         </div>
 
         <div className="flex flex-col mb-2">
-          <span>Price</span>
+          <span>Notas</span>
+          <textarea
+            rows={2}
+            className="p-2 border rounded-md bg-gray-200"
+            {...register("notas", { required: true })}
+          ></textarea>
+        </div>
+
+        <div className="flex flex-col mb-2">
+          <span>Precio</span>
           <input
             type="number"
             className="p-2 border rounded-md bg-gray-200"
+            {...register("precio", { required: true })}
           />
         </div>
 
-        {/* <div className="flex flex-col mb-2">
-          <span>Tags</span>
+        <div className="flex flex-col mb-2">
+          <span>Cantidad</span>
           <input
-            type="text"
+            type="number"
             className="p-2 border rounded-md bg-gray-200"
+            {...register("cantidad", { required: true })}
           />
-        </div> */}
-
-        {/* <div className="flex flex-col mb-2">
-          <span>Gender</span>
-          <select className="p-2 border rounded-md bg-gray-200">
-            <option value="">[Seleccione]</option>
-            <option value="men">Men</option>
-            <option value="women">Women</option>
-            <option value="kid">Kid</option>
-            <option value="unisex">Unisex</option>
-          </select>
-        </div> */}
-
-        <div className="flex flex-col mb-5">
-          <span>Categoria</span>
-          <select className="p-2 border rounded-md bg-gray-200">
-            <option value="">[Seleccione]</option>
-            {categories.map((category) => (
-              <option
-                key={category.id}
-                value={category.id}
-              >
-                {category.nombre}
-              </option>
-            ))}
-          </select>
         </div>
 
-        <div className="flex flex-col mb-5">
-          <span>Sub Categoria</span>
-          <select className="p-2 border rounded-md bg-gray-200">
-            <option value="">[Seleccione]</option>
-            {subCategories.map((subCategory) => (
-              <option
-                key={subCategory.id}
-                value={subCategory.id}
-              >
-                {subCategory.nombre}
-              </option>
-            ))}
-          </select>
+        <div className="flex flex-col mb-2">
+          <span>Contenido</span>
+          <input
+            type="number"
+            className="p-2 border rounded-md bg-gray-200"
+            {...register("contenido", { required: false })}
+          />
         </div>
 
-        <button className="btn-primary w-full">Guardar</button>
+        <button
+          // type="button"
+          className="btn-primary w-full"
+        >
+          Guardar
+        </button>
       </div>
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
         {/* As checkboxes */}
         <div className="flex flex-col">
-          {/* <span>Tallas</span>
-          <div className="flex flex-wrap">
-            {sizes.map((size) => (
-              // bg-blue-500 text-white <--- si está seleccionado
-              <div
-                key={size}
-                className="flex  items-center justify-center w-10 h-10 mr-2 border rounded-md"
-              >
-                <span>{size}</span>
-              </div>
-            ))}
-          </div> */}
+          <div className="flex flex-col mb-2">
+            <span>Cosecha aproximada</span>
+            <textarea
+              rows={2}
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("cosecha_aprox", { required: false })}
+            ></textarea>
+          </div>
+
+          <div className="flex flex-col mb-2">
+            <span>Descuento</span>
+            <input
+              type="number"
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("descuento", { required: false })}
+            />
+          </div>
+
+          <div className="flex flex-col mb-5">
+            <span>Categoria</span>
+            <select
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("categorias_id", { required: true })}
+            >
+              <option value="">[Seleccione]</option>
+              {categories.map((category) => (
+                <option
+                  key={category.id}
+                  value={category.id}
+                >
+                  {category.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col mb-5">
+            <span>Sub Categoria</span>
+            <select
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("sub_categorias_id", { required: true })}
+            >
+              <option value="">[Seleccione]</option>
+              {subCategories.map((subCategory) => (
+                <option
+                  key={subCategory.id}
+                  value={subCategory.id}
+                >
+                  {subCategory.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <div className="flex flex-col mb-2">
             <span>Fotos</span>
             <input
               type="file"
+              {...register("images")}
               multiple
               className="p-2 border rounded-md bg-gray-200"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/avif"
             />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3 grow">
+            {product.producto_imagenes?.map((image) => (
+              <div
+                key={image.id}
+                className="flex flex-col justify-end"
+              >
+                <ProductImage
+                  alt={product.titulo ?? ""}
+                  src={image.url}
+                  width={300}
+                  height={300}
+                  className="rounded-t shadow-md"
+                />
+
+                <button
+                  type="button"
+                  // onClick={() => deleteProductImage(image.id, image.url)}
+                  className="btn-danger w-full rounded-b-xl"
+                >
+                  Eliminar
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

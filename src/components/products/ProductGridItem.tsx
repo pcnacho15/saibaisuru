@@ -3,19 +3,19 @@
 import { CartProduct, Product } from "@/interfaces/Product";
 import { useCartStore } from "@/store/cartStore";
 import { currencyFormat, sleep } from "@/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { RiShoppingBasket2Line } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { ProductImage } from "../product/product-image/ProductImage";
 
 interface Props {
   product: Product;
 }
 
 export const ProductGridItem = ({ product }: Props) => {
-  const [displayImage, setDisplayImage] = useState(product.images[0]);
+  // const [displayImage, setDisplayImage] = useState(product.images[0]);
   const [posted, setPosted] = useState(false);
   const [check, setCheck] = useState(false);
 
@@ -63,15 +63,14 @@ export const ProductGridItem = ({ product }: Props) => {
         href={`/product/${product.slug}`}
         className="hover:rotate-1 transition-all duration-300"
       >
-        <Image
-          src={`/products/${displayImage}`}
+        <ProductImage
+          src={product.images[0]}
           alt={product.titulo}
           className="w-full object-cover rounded"
           width={400}
           height={400}
           //   onMouseEnter={() => setDisplayImage(product.images[1])}
           //   onMouseLeave={() => setDisplayImage(product.images[0])}
-          priority
         />
         {/* <div className="relative bg-lime-600 h-9 text-white font-semibold text-center">
           <span>40% OFF</span>

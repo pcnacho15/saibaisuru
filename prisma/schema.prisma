@@ -51,24 +51,24 @@ model sub_cagegorias {
   id     String @id @default(uuid())
   nombre String
 
-  categoria    categorias  @relation(fields: [categorias_id], references: [id])
+  categoria     categorias  @relation(fields: [categorias_id], references: [id])
   categorias_id String
-  productos    productos[]
+  productos     productos[]
 }
 
 model productos {
-  id            String     @id @default(uuid())
+  id            String  @id @default(uuid())
   titulo        String
-  slug          String     @unique
+  slug          String  @unique
   descripcion   String
   notas         String
   cantidad      Int
-  precio        Float      @default(0)
+  precio        Float   @default(0)
   descuento     Int?
   aroma         String?
   sabor         String?
-  contenido     Int
-  cosecha_aprox String
+  contenido     Int? 
+  cosecha_aprox String?
   // tipo_producto TipoProducto
 
   //* Relaciones

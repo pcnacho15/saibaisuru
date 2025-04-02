@@ -1,27 +1,24 @@
 // https://tailwindcomponents.com/component/hoverable-table
 
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { IoCardOutline } from "react-icons/io5";
-import { IoMdCheckboxOutline } from "react-icons/io";
-import { TbTruckDelivery } from "react-icons/tb";
 import { Title } from "@/components";
 import { getPaginatedProductsWithImages } from "@/actions";
-import Image from "next/image";
 import { currencyFormat } from "@/utils";
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 // import { getPaginatedOrders } from "@/actions/orders/get-paginated-orders";
 
-interface Props {
-  searchParams: {
-    page?: string;
-  };
-}
 
-export default async function ProductsAdminPage({ searchParams }: Props) {
-  const currentParams = await searchParams;
+type SearchParams = Promise<{
+  page?: string;
+}>;
+
+export default async function ProductsAdminPage(props: {
+  searchParams: SearchParams;
+}) {
+  const currentParams = await props.searchParams;
   const currentPage = currentParams.page ? parseInt(currentParams.page) : 1;
 
-  const { products, totalPages } = await getPaginatedProductsWithImages({
+  const { products, /*totalPages*/ } = await getPaginatedProductsWithImages({
     page: currentPage,
   });
 
@@ -98,8 +95,8 @@ export default async function ProductsAdminPage({ searchParams }: Props) {
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   <Link href={`/product/${product.slug}`}>
-                    <Image
-                      src={`/products/${product.images[0]}`}
+                    <ProductImage
+                      src={product.images[0]}
                       width={80}
                       height={80}
                       alt={product.titulo}

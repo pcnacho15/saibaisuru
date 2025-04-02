@@ -8,11 +8,12 @@ import { useFilterStore } from "@/store/productStore";
 import { useUiStore } from "@/store/uiStore";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../utils/accordion";
 import { Checkbox } from "../utils/checkbox";
-import { ValidTiposSemillas } from "@/interfaces/Product";
-import { Semilla } from "@prisma/client";
+// import { ValidTiposSemillas } from "@/interfaces/Product";
+// import { TipoProducto } from "@prisma/client";
+import { SemillasType } from "@/interfaces/Product";
 
 interface Props {
-  semillas?: Semilla[];
+  semillas?: SemillasType[];
   // colores: any[];
 }
 

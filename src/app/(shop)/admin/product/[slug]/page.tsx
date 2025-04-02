@@ -9,21 +9,30 @@ type Params = Promise<{
 
 export default async function ProductPage(props: { params: Params }) {
   const { slug } = await props.params;
-  const product = await getProductBySlug(slug);
 
-  const categories = await getCategories();
-  const subCategories = await getSubCategories();
+  const [product, categories, subCategories] = await Promise.all([
+    getProductBySlug(slug),
+    getCategories(),
+    getSubCategories(),
+  ]);
 
-  if (!product) redirect('/admin/products')
+  // Todo: new
+  if (!product && slug !== "new") {
+    redirect("/admin/products");
+  }
 
 
-    const title = slug === "new" ? "Agrega nuevo producto" : `Editar producto`;
+  const title = slug === "new" ? "Agrega nuevo producto" : `Editar producto`;
 
   return (
     <>
-        <Title title={ title } />
+      <Title title={title} />
 
-        <ProductForm product={ product } categories={ categories } subCategories={ subCategories } />
+      <ProductForm
+        product={product ?? {}}
+        categories={categories}
+        subCategories={subCategories}
+      />
     </>
   );
 }

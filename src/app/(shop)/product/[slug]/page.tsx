@@ -16,7 +16,6 @@ import {
   Title,
 } from "@/components";
 import { getProductBySlug, getProductsRelationByMarca } from "@/actions";
-import { LuFlower } from "react-icons/lu";
 import { RiSeedlingLine } from "react-icons/ri";
 
 type Params = Promise<{

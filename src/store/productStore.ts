@@ -1,17 +1,18 @@
+import { CultivoType, SemillasType } from "@/interfaces/Product";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface State {
-  semillas: any[];
+  semillas: SemillasType[];
   // colores: any[];
-  cultivos: any[];
+  cultivos: CultivoType[];
 
   // Methods
-  setSemillaFilter: (marcasFilter: string) => void;
+  setSemillaFilter: (semillasFilter: SemillasType) => void;
 
   // setColorFilter: (color: any) => void;
 
-  setCultivoFilter: (estado: any) => void;
+  setCultivoFilter: (cultivoFilter: CultivoType) => void;
 }
 
 export const useFilterStore = create<State>()(
@@ -22,8 +23,8 @@ export const useFilterStore = create<State>()(
       cultivos: [],
 
       // Methods
-      setSemillaFilter: (semillaFilter: string) => {
-        let { semillas } = get();
+      setSemillaFilter: (semillaFilter: SemillasType) => {
+        const { semillas } = get();
 
         if (semillas.includes(semillaFilter)) {
           set({
@@ -53,19 +54,19 @@ export const useFilterStore = create<State>()(
       //   });
       // },
 
-      setCultivoFilter: (estado: string) => {
-        let { cultivos } = get();
+      setCultivoFilter: (cultivo: CultivoType) => {
+        const { cultivos } = get();
 
-        if (cultivos.includes(estado)) {
+        if (cultivos.includes(cultivo)) {
           set({
-            cultivos: cultivos.filter((item) => item !== estado),
+            cultivos: cultivos.filter((item) => item !== cultivo),
           });
 
           return;
         }
 
         set({
-          cultivos: [...cultivos, estado],
+          cultivos: [...cultivos, cultivo],
         });
       },
     }),

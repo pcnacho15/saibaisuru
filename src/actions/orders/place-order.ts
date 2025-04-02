@@ -38,7 +38,7 @@ export const placeOrder = async (
   const itemsInOrder = productIds.reduce((count, p) => count + p.quantity, 0);
 
   // Los totales de tax, subtotal, y total
-  let { subTotal, /*tax,*/ total } = productIds.reduce(
+  const { subTotal, /*tax,*/ total } = productIds.reduce(
     (totals, item) => {
       const productQuantity = item.quantity;
       const product = products.find((product) => product.id === item.productId);
@@ -93,8 +93,8 @@ export const placeOrder = async (
       });
 
       //* Calcular costo de envío
-      let costoEnvio = 20000;
-      total += costoEnvio;
+      const costoEnvio = 20000;
+      const totalConEnvio = total + costoEnvio;
 
       // if (productIds.length > 4) {
       //   costoEnvio = 40000;
@@ -114,7 +114,7 @@ export const placeOrder = async (
           costo_envio: costoEnvio,
           // tax: tax,
           sub_total: subTotal,
-          total: total,
+          total: totalConEnvio,
 
           OrderDetalle: {
             createMany: {
@@ -135,7 +135,7 @@ export const placeOrder = async (
 
       // 3. Crear la direccion de la orden
       // Address
-      const { tipoEnvio, ...restAddress } = address;
+      const { /*tipoEnvio,*/ ...restAddress } = address;
       // console.log(address);
       const orderAddress = await tx.order_adress.create({
         data: {
@@ -156,11 +156,11 @@ export const placeOrder = async (
       order: prismaTx.order,
       prismaTx: prismaTx,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.log(error);
     return {
       ok: false,
-      message: error?.message,
+      message: `Ha ocurrido un error realizado la orden: ${ error }`,
     };
   }
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { QuantitySelector } from "@/components";
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { useCartStore } from "@/store/cartStore";
 import { currencyFormat } from "@/utils";
 import clsx from "clsx";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsCartX } from "react-icons/bs";
@@ -43,24 +43,24 @@ export const ProductsInCart = () => {
   return (
     <div
       className={clsx(
-              `pr-3 overflow-auto [&::-webkit-scrollbar]:w-2
+        `pr-3 overflow-auto [&::-webkit-scrollbar]:w-2
         [&::-webkit-scrollbar-track]:rounded-full
         [&::-webkit-scrollbar-track]:bg-gray-100
         [&::-webkit-scrollbar-thumb]:rounded-full
         [&::-webkit-scrollbar-thumb]:bg-gray-300`,
-              {
-                "h-[330px]": productsInCart.length > 1,
-                "h-auto": productsInCart.length === 1,
-              }
-            )}
+        {
+          "h-[330px]": productsInCart.length > 1,
+          "h-auto": productsInCart.length === 1,
+        }
+      )}
     >
       {productsInCart.map((p) => (
         <div
           key={`${p.slug}`}
           className="flex md:items-start my-3 py-5 px-2 shadow-md rounded-md w-auto bg-white"
         >
-          <Image
-            src={`/products/${p.image}`}
+          <ProductImage
+            src={p.image}
             width={100}
             height={100}
             alt={p.title}
@@ -79,9 +79,7 @@ export const ProductsInCart = () => {
               <p className={`text-lg capitalize`}>{p.title}</p>
             </Link>
             {/* <p className="capitalize text-base mb-2">({p.color})</p> */}
-            <p className={`mb-2 text-base`}>
-              {currencyFormat(p.price)}
-            </p>
+            <p className={`mb-2 text-base`}>{currencyFormat(p.price)}</p>
 
             <div className="flex items-center gap-5 md:gap-8 mt-3">
               <QuantitySelector

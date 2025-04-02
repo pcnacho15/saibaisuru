@@ -5,18 +5,19 @@ import { format } from "date-fns";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { IoCardOutline } from "react-icons/io5";
-import Image from "next/image";
 import { currencyFormat } from "@/utils";
 import { revalidateOrders } from "@/actions/orders/revalidate-orders-epayco";
 import clsx from "clsx";
+import { ProductImage } from "../product/product-image/ProductImage";
+import { Order } from "@/interfaces/OrderItem";
 
 interface Props {
-  order: any;
+  order: Order;
 }
 
 export const OrderItem = ({ order }: Props) => {
   useEffect(() => {
-    if (!order.isPaid && order.transaction_id) {
+    if (order.estado_order === 'pendiente' && order.transaction_id) {
       revalidateOrders(order.transaction_id);
     }
   }, [order]);
@@ -37,14 +38,11 @@ export const OrderItem = ({ order }: Props) => {
             </div>
           )} */}
           <div
-            className={clsx(
-              "capitalize font-bold",
-              {
-                "text-blue-800": order.estado_order === "pendiente",
-                "text-green-700": order.estado_order === "pagada",
-                "text-red-700": order.estado_order === "rechazada",
-              }
-            )}
+            className={clsx("capitalize font-bold", {
+              "text-blue-800": order.estado_order === "pendiente",
+              "text-green-700": order.estado_order === "pagada",
+              "text-red-700": order.estado_order === "rechazada",
+            })}
           >
             <div className="flex items-center">
               <IoCardOutline />
@@ -63,14 +61,14 @@ export const OrderItem = ({ order }: Props) => {
   [&::-webkit-scrollbar-thumb]:rounded-full
   [&::-webkit-scrollbar-thumb]:bg-gray-300"
         >
-          {order.OrderDetalle.map((item: any) => (
+          {order.OrderDetalle.map((item) => (
             <div
               key={item.producto.slug}
               className="flex items-center justify-between"
             >
               <span className="capitalize">{item.producto.titulo}</span>
-              <Image
-                src={`/products/${item.producto.producto_imagenes[0].url}`}
+              <ProductImage
+                src={item.producto.producto_imagenes[0].url}
                 alt={item.producto.titulo}
                 // className="w-full object-cover rounded"
                 width={50}

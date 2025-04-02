@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
+// import { useFormState, useFormStatus } from "react-dom";
 import clsx from "clsx";
 // import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { login, registerUser } from "@/actions";
-import { IoInformationCircleOutline } from "react-icons/io5";
+// import { IoInformationCircleOutline } from "react-icons/io5";
 
 type FormInputs = {
   // name: string;

@@ -30,6 +30,7 @@ export const changeUserRole = async (userId: string, role: string) => {
 
     return {
       ok: true,
+      user
     };
   } catch (error) {
     console.log(error);

@@ -8,7 +8,7 @@ import { useUiStore } from "@/store/uiStore";
 
 // import { useUiStore } from "@/modules";
 // import { useCartStore } from "@/modules/cart";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { HiOutlineShoppingCart } from "react-icons/hi";

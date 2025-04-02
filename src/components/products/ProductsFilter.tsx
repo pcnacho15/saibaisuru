@@ -1,4 +1,4 @@
-import { ValidTipoCultivo, ValidTiposSemillas } from "@/interfaces/Product";
+import { CultivoType, SemillasType } from "@/interfaces/Product";
 import { useFilterStore } from "@/store/productStore";
 import { useEffect, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/utils/accordion";
@@ -6,8 +6,8 @@ import { Checkbox } from "../ui/utils/checkbox";
 
 
 interface Props {
-  semillas?: { tipo: ValidTiposSemillas }[];
-  cultivos?: { cultivo: ValidTipoCultivo }[];
+  semillas?: { tipo: SemillasType }[];
+  cultivos?: { cultivo: CultivoType }[];
 }
 
 export const ProductsFilter = ({ semillas, cultivos }: Props) => {
@@ -114,8 +114,8 @@ export const ProductsFilter = ({ semillas, cultivos }: Props) => {
               >
                 <Checkbox
                   id={item.cultivo}
-                  checked={cultivosSelect.includes(item)}
-                  onCheckedChange={() => setCultivosSelect(item)}
+                  checked={cultivosSelect.includes(item.cultivo)}
+                  onCheckedChange={() => setCultivosSelect(item.cultivo)}
                 />
                 <label
                   htmlFor={item.cultivo}

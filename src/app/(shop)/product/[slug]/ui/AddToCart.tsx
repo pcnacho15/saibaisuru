@@ -34,7 +34,7 @@ export const AddToCart = ({ product }: Props) => {
       title: product.titulo,
       price: product.precio,
       quantity: quantity,
-      tipoSemilla: product.tipo_semilla,
+      tipoProducto: product.subCategoria.nombre,
       // color: product.color,
       image: product.images[0],
     };

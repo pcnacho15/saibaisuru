@@ -9,6 +9,8 @@ export const getProductBySlug = async (slug: string) => {
         producto_imagenes: {
           select: {
             url: true,
+            id:true,
+            productos_id: true
           },
           orderBy: {
             url: "asc",

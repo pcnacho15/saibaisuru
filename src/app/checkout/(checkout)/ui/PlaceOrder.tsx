@@ -15,20 +15,24 @@ import { TbEdit } from "react-icons/tb";
 import { useAdresStore } from "@/store/adresStore";
 import { useCartStore } from "@/store/cartStore";
 import { placeOrder } from "@/actions/orders/place-order";
+import { EPayco } from "@/interfaces/OrderItem";
 // import { createPreferenceMP } from "@/modules/pagos/actions/mercado-pago/create-prefecence";
 // import Script from "next/script";
 // import { Epayco } from "@/modules/pagos/components/Epayco";
 
 // Declaración del objeto ePayco en el ámbito global
+
+
+
 declare global {
   interface Window {
-    ePayco: any;
+    ePayco: EPayco;
   }
 }
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [costoEnvio, setCostoEnvio] = useState(0)
 
@@ -78,7 +82,7 @@ export const PlaceOrder = () => {
     } else {
       setLoaded(true); // El script ya estaba cargado
     }
-  }, []);
+  }, [address.tipoEnvio, cart.length, total]);
 
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
@@ -113,13 +117,13 @@ export const PlaceOrder = () => {
 
       const handler = window.ePayco.checkout.configure({
         key: process.env.NEXT_PUBLIC_EPAYCO_KEY,
-        test: true, // Cambiar a false en producción
+        test: Boolean(process.env.NEXT_PUBLIC_TEST), // Cambiar a false en producción
       });
 
       const resp = await onPlaceOrder();
       // console.log()
 
-      const productos = resp?.updatedProducts.map((p:any) => p.title).join(", ");
+      const productos = resp?.updatedProducts.map((p) => p.titulo).join(", ");
       // console.log(productos);
 
       const data = {
@@ -276,7 +280,7 @@ export const PlaceOrder = () => {
               loaded ? "bg-blue-600" : "bg-gray-400"
             } flex items-center justify-center w-full active:scale-95 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-all duration-200`}
           >
-            {loaded ? "Pagar con Epayco" : "Cargando..."}
+            {loaded || !isPlacingOrder ? "Pagar con Epayco" : "Cargando..."}
           </button>
 
           <div className="flex flex-col items-center justify-center mt-5">

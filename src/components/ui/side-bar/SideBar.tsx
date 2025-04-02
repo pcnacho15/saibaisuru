@@ -5,15 +5,15 @@ import clsx from "clsx";
 
 import { useUiStore } from "@/store/uiStore";
 import {
-  IoBulbOutline,
+  // IoBulbOutline,
   IoCloseOutline,
   IoHomeOutline,
-  IoLogInOutline,
+  // IoLogInOutline,
   IoLogOutOutline,
   IoPeopleOutline,
   IoPersonOutline,
-  IoPhonePortraitOutline,
-  IoSearchOutline,
+  // IoPhonePortraitOutline,
+  // IoSearchOutline,
   IoShirtOutline,
   IoTicketOutline,
 } from "react-icons/io5";

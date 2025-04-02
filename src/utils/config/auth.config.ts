@@ -22,7 +22,7 @@ export const authConfig: NextAuthConfig = {
           if (!emailUser) {
             //* Crear usuario
             try {
-              const { clave, ...rest } = await prisma.usuarios.create({
+              const { ...rest } = await prisma.usuarios.create({
                 data: {
                   nombre: profile?.given_name?.toLowerCase() || '',
                   apellido: profile?.family_name?.toLowerCase() || '',
@@ -56,7 +56,7 @@ export const authConfig: NextAuthConfig = {
     },
     async session({ session, token }) {
       // console.log(token.data);
-      session.user = token.data as any;
+      session.user = token.data as typeof session.user;
       return session;
     },
   },
@@ -76,14 +76,14 @@ export const authConfig: NextAuthConfig = {
         const user = await prisma.usuarios.findUnique({
           where: { email: email?.toLocaleLowerCase() },
         });
+
         if (!user) return null;
 
-        //* Comparar contraseñas
-        if (!bcrypt.compareSync(password, user.clave)) return null;
-
         //* Regresar el usuario encontrado
-
         const { clave, ...rest } = user;
+
+        //* Comparar contraseñas
+        if (!bcrypt.compareSync(password, clave)) return null;
 
         return rest;
       },

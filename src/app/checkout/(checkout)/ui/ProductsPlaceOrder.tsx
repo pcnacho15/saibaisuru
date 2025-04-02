@@ -1,9 +1,9 @@
 "use client";
 
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { useCartStore } from "@/store/cartStore";
 import { currencyFormat } from "@/utils";
 import clsx from "clsx";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export const ProductsPlaceOrder = () => {
@@ -38,8 +38,8 @@ export const ProductsPlaceOrder = () => {
           key={`${p.slug}`}
           className="flex my-3 px-2 py-5 bg-white shadow-md rounded-xl w-auto"
         >
-          <Image
-            src={`/products/${p.image}`}
+          <ProductImage
+            src={p.image}
             width={100}
             height={100}
             alt={p.title}
@@ -60,7 +60,7 @@ export const ProductsPlaceOrder = () => {
               </p>
             </span>
             <p className="capitalize mt-1 mb-2 text-sm text-gray-500">
-              ({p.tipoSemilla})
+              ({p.tipoProducto})
             </p>
             <p className={`mb-2 mt-3 text-base font-medium`}>
               Subtotal:

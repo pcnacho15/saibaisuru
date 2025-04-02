@@ -8,8 +8,8 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BsShop } from "react-icons/bs";
-import { TbTruckDelivery } from "react-icons/tb";
+// import { BsShop } from "react-icons/bs";
+// import { TbTruckDelivery } from "react-icons/tb";
 
 interface FormInputs {
   correo: string;
@@ -61,7 +61,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
     setMunicipioSelect(
       municipios.filter((m) => m.departamento_id === Number(valueDepartamento))
     );
-    let adress = getAdress();
+    const adress = getAdress();
 
     // const departamento= Number(adress.departamento);
     // const municipio = Number(adress.municipio);
@@ -82,7 +82,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
         municipio: municipioFound!.id,
       });
     }
-  }, [valueDepartamento]);
+  }, [valueDepartamento, departamentos, getAdress, municipios, reset]);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     // if (envio === 2) {

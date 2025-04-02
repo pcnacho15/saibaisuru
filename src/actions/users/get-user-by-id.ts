@@ -22,7 +22,8 @@ export const getUserById = async (id: string) => {
       };
     }
 
-    const { clave, ...resto } = user;
+    const { ...resto } = user;
+    
 
     return {
       ok: true,
