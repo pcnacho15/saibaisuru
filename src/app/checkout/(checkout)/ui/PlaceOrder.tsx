@@ -32,8 +32,6 @@ export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-  const [costoEnvio, setCostoEnvio] = useState(20000);
-
   const address = useAdresStore((state) => state.getAdress());
 
   const cart = useCartStore((state) => state.cart);
@@ -191,7 +189,7 @@ export const PlaceOrder = () => {
           </span>
           <span className="mt-2 text-lg">Envío</span>
           <span className="text-right mt-2 text-lg">
-            {currencyFormat(costoEnvio)}
+            {currencyFormat(20000)}
           </span>
 
           {/* <span>Impuestos (15%)</span>
