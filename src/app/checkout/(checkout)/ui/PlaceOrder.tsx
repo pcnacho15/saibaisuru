@@ -104,7 +104,7 @@ export const PlaceOrder = () => {
 
     const handler = window.ePayco.checkout.configure({
       key: process.env.NEXT_PUBLIC_EPAYCO_KEY,
-      test: Boolean(process.env.NEXT_PUBLIC_TEST), // Cambiar a false en producción
+      test: false, // Cambiar a false en producción
     });
 
     const resp = await onPlaceOrder();
