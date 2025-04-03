@@ -21,7 +21,7 @@ interface FormInputs {
   titulo: string;
   slug: string;
   descripcion: string;
-  notas: string;
+  notas: string | null;
   // aroma: string;
   precio: number;
   cantidad: number;
@@ -66,7 +66,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
     formData.append("descripcion", productToSave.descripcion);
     formData.append("precio", productToSave.precio.toString());
     formData.append("cantidad", productToSave.cantidad.toString());
-    formData.append("notas", productToSave.notas);
+    formData.append("notas", productToSave.notas ?? "");
     formData.append("contenido", productToSave.contenido?.toString() ?? "");
     formData.append(
       "cosecha_aprox",
@@ -131,7 +131,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
           <textarea
             rows={2}
             className="p-2 border rounded-md bg-gray-200"
-            {...register("notas", { required: true })}
+            {...register("notas", { required: false })}
           ></textarea>
         </div>
 

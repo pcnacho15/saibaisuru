@@ -167,13 +167,16 @@ export default async function ProductPage(props: { params: Params }) {
                 </ul>
               </AccordionContent>
             </AccordionItem> */}
-
+            {
+              product.notas && (
             <AccordionItem value="item-2">
               <AccordionTrigger className="text-base">Efectos</AccordionTrigger>
               <AccordionContent className="text-lg">
                 {product.notas}
               </AccordionContent>
             </AccordionItem>
+              )
+            }
           </Accordion>
 
           {/* Detalles de envío */}

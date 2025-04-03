@@ -2,7 +2,7 @@ export interface Product {
   id: string;
   titulo: string;
   descripcion: string;
-  notas: string;
+  notas: string | null;
   cantidad: number;
   precio: number;
   aroma?: string | null;

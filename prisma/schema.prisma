@@ -61,7 +61,7 @@ model productos {
   titulo        String
   slug          String  @unique
   descripcion   String
-  notas         String
+  notas         String?
   cantidad      Int
   precio        Float   @default(0)
   descuento     Int?
