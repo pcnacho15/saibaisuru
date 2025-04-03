@@ -12,7 +12,7 @@ interface State {
     municipio: string;
     direccion: string;
     direccion2?: string;
-    tipoEnvio: boolean;
+    // tipoEnvio: boolean;
     // codigoPostal: string;
     // ciudad: string;
     // pais: string;
@@ -38,7 +38,7 @@ export const useAdresStore = create<State>()(
         municipio: "",
         direccion: "",
         direccion2: "",
-        tipoEnvio: false,
+        // tipoEnvio: false,
         // codigoPostal: "",
         // ciudad: "",
         // pais: "",

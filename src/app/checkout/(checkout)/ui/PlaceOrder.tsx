@@ -22,8 +22,6 @@ import { EPayco } from "@/interfaces/OrderItem";
 
 // Declaración del objeto ePayco en el ámbito global
 
-
-
 declare global {
   interface Window {
     ePayco: EPayco;
@@ -34,32 +32,24 @@ export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-  const [costoEnvio, setCostoEnvio] = useState(0)
+  const [costoEnvio, setCostoEnvio] = useState(20000);
 
   const address = useAdresStore((state) => state.getAdress());
-  
+
   const cart = useCartStore((state) => state.cart);
   const { subTotal, /*tax*/ total, totalItems } =
     useCartStore().getSummaryProducts();
 
-   const [totalOrder, setTotalOrder] = useState(total);
+  const [totalOrder, setTotalOrder] = useState(total);
 
   // const router = useRouter();
 
   const clearCart = useCartStore((state) => state.clearCart);
- 
 
   useEffect(() => {
     //* Calcular costo de envío
-    if (!address.tipoEnvio) {
-      if (cart.length > 4) {
-        setCostoEnvio(40000);
-        setTotalOrder(total + 40000);
-      } else {
-        setCostoEnvio(20000);
-        setTotalOrder(total + 20000);
-      }
-    }
+
+    setTotalOrder(total + 20000);
 
     // Verificar si el script ya está cargado para evitar duplicados
     if (!document.querySelector("#epayco-script")) {
@@ -82,7 +72,7 @@ export const PlaceOrder = () => {
     } else {
       setLoaded(true); // El script ya estaba cargado
     }
-  }, [address.tipoEnvio, cart.length, total]);
+  }, [cart.length, total]);
 
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
@@ -106,50 +96,49 @@ export const PlaceOrder = () => {
     // router.replace("orders/" + resp.order?.id);
   };
 
+  const handlePayment = async () => {
+    if (!loaded || !window.ePayco) {
+      console.error(
+        "Epayco aún no está cargado. Por favor, espera unos segundos y vuelve a intentarlo."
+      );
+      return;
+    }
 
-    const handlePayment = async () => {
-      if (!loaded || !window.ePayco) {
-        console.error(
-          "Epayco aún no está cargado. Por favor, espera unos segundos y vuelve a intentarlo."
-        );
-        return;
-      }
+    const handler = window.ePayco.checkout.configure({
+      key: process.env.NEXT_PUBLIC_EPAYCO_KEY,
+      test: Boolean(process.env.NEXT_PUBLIC_TEST), // Cambiar a false en producción
+    });
 
-      const handler = window.ePayco.checkout.configure({
-        key: process.env.NEXT_PUBLIC_EPAYCO_KEY,
-        test: Boolean(process.env.NEXT_PUBLIC_TEST), // Cambiar a false en producción
-      });
+    const resp = await onPlaceOrder();
+    // console.log()
 
-      const resp = await onPlaceOrder();
-      // console.log()
+    const productos = resp?.updatedProducts.map((p) => p.titulo).join(", ");
+    // console.log(productos);
 
-      const productos = resp?.updatedProducts.map((p) => p.titulo).join(", ");
-      // console.log(productos);
-
-      const data = {
-        name: "Celuantioquia",
-        description: productos,
-        invoice: resp!.order.id,
-        currency: "cop",
-        amount: resp?.order.total.toString(),
-        tax_base: "0",
-        tax: resp?.order.tax?.toString(),
-        country: "CO",
-        lang: "es",
-        external: "false",
-        response: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/orders/${
-          resp!.order?.id
-        }`,
-        confirmation: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/api/epayco`,
-        // method_confirmation: "post",
-        // extra1: "Información adicional 1",
-      };
-
-      handler.open(data);
-      
-      //* Todo salió bien!
-      clearCart();
+    const data = {
+      name: "Celuantioquia",
+      description: productos,
+      invoice: resp!.order.id,
+      currency: "cop",
+      amount: resp?.order.total.toString(),
+      tax_base: "0",
+      tax: resp?.order.tax?.toString(),
+      country: "CO",
+      lang: "es",
+      external: "false",
+      response: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/orders/${
+        resp!.order?.id
+      }`,
+      confirmation: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/api/epayco`,
+      // method_confirmation: "post",
+      // extra1: "Información adicional 1",
     };
+
+    handler.open(data);
+
+    //* Todo salió bien!
+    clearCart();
+  };
 
   if (!loaded) {
     return <p>Cargando...</p>;
@@ -181,18 +170,12 @@ export const PlaceOrder = () => {
             {address.direccion} {address.direccion2}
           </p>
           <p className="text-lg">{address.telefono}</p>
-          <p className="text-lg capitalize">
-            tipo envío:{" "}
-            {!address.tipoEnvio ? "Nacional" : "Recoger en la tienda"}
-          </p>
         </div>
 
         {/* Divider */}
         <div className="w-full h-0.5 rounded my-5 bg-gray-200" />
 
-        <h2 className={` text-xl mb-2 font-semibold`}>
-          Resumen de orden
-        </h2>
+        <h2 className={` text-xl mb-2 font-semibold`}>Resumen de orden</h2>
 
         <div className="grid grid-cols-2">
           <span className="text-lg">No. Productos</span>
@@ -207,20 +190,9 @@ export const PlaceOrder = () => {
             {currencyFormat(subTotal)}
           </span>
           <span className="mt-2 text-lg">Envío</span>
-
-          {!address.tipoEnvio ? (
-            <>
-              <span className="text-right mt-2 text-lg">
-                {currencyFormat(costoEnvio)}
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="text-right mt-2 text-lg">
-                {currencyFormat(0)}
-              </span>
-            </>
-          )}
+          <span className="text-right mt-2 text-lg">
+            {currencyFormat(costoEnvio)}
+          </span>
 
           {/* <span>Impuestos (15%)</span>
         <span className="text-right">{currencyFormat(tax)}</span> */}
