@@ -35,7 +35,7 @@ interface Props {
 export const AdressForm = ({ departamentos, municipios }: Props) => {
   // console.log(municipios)
   const [municipioSelect, setMunicipioSelect] = useState<Municipio[]>([]);
-  const [envio, setEnvio] = useState(false);
+  // const [envio, setEnvio] = useState(false);
 
   const router = useRouter();
   const setAdress = useAdresStore((state) => state.setAdress);
@@ -66,9 +66,9 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
     // const departamento= Number(adress.departamento);
     // const municipio = Number(adress.municipio);
 
-    const { departamento, municipio, tipoEnvio, ...resto } = adress;
+    const { departamento, municipio, ...resto } = adress;
 
-    setEnvio( tipoEnvio )
+    // setEnvio( tipoEnvio )
 
     const departmentFound = departamentos.find(
       (d) => d.nombre === departamento
@@ -99,7 +99,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
       ...resto,
       departamento: departmentById!.nombre,
       municipio: municipioById!.nombre,
-      tipoEnvio: envio
+      // tipoEnvio: envio
     });
     router.replace("/checkout");
   };
