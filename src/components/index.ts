@@ -4,6 +4,7 @@ export { TopMenu } from "./ui/top-menu/TopMenu";
 export { TopMenuSale } from "./ui/top-menu-sale/TopMenuSale";
 export { Sidebar } from "./ui/side-bar/SideBar";
 export { Footer } from "./ui/footer/Footer";
+export { Pagination } from './ui/pagination/Pagination';
 export * from "./ui/utils/accordion";
 export * from "./ui/utils/button";
 export * from "./ui/utils/card";
