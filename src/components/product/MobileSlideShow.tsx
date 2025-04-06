@@ -10,7 +10,8 @@ import "swiper/css/pagination";
 import "./slideshow.css";
 
 import { Autoplay, FreeMode, Pagination } from "swiper/modules";
-import Image from "next/image";
+// import Image from "next/image";
+import { ProductImage } from "./product-image/ProductImage";
 
 interface Props {
   images: string[];
@@ -35,10 +36,10 @@ export const MobileSlideShow = ({ images, title, className }: Props) => {
       >
         {images.map((img) => (
           <SwiperSlide key={img}>
-            <Image
+            <ProductImage
               width={600}
               height={500}
-              src={`/products/${img}`}
+              src={img}
               alt={title}
               className="rounded-lg object-fill"
             />

@@ -1,7 +1,7 @@
 "use client";
 
 // import { CultivoType, SemillasType } from "@/interfaces/Product";
-import { useFilterStore } from "@/store/productStore";
+// import { useFilterStore } from "@/store/productStore";
 import { useEffect, useRef } from "react";
 import {
   Accordion,
