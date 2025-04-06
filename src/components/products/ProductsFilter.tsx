@@ -1,22 +1,22 @@
 "use client";
 
-import { CultivoType, SemillasType } from "@/interfaces/Product";
+// import { CultivoType, SemillasType } from "@/interfaces/Product";
 import { useFilterStore } from "@/store/productStore";
 import { useEffect, useRef } from "react";
 import {
   Accordion,
-  AccordionContent,
+  // AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../ui/utils/accordion";
-import { Checkbox } from "../ui/utils/checkbox";
+// import { Checkbox } from "../ui/utils/checkbox";
 
 export const ProductsFilter = () => {
-  const semillasSelect = useFilterStore().semillas;
-  const setSemillasFilter = useFilterStore().setSemillaFilter;
+  // const semillasSelect = useFilterStore().semillas;
+  // const setSemillasFilter = useFilterStore().setSemillaFilter;
 
-  const cultivosSelect = useFilterStore().cultivos;
-  const setCultivosSelect = useFilterStore().setCultivoFilter;
+  // const cultivosSelect = useFilterStore().cultivos;
+  // const setCultivosSelect = useFilterStore().setCultivoFilter;
 
   const divRef = useRef<HTMLDivElement>(null);
 

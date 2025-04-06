@@ -1,6 +1,6 @@
 import { getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
-import { ProductsFilter } from "@/components/products/ProductsFilter";
+// import { ProductsFilter } from "@/components/products/ProductsFilter";
 import { redirect } from "next/navigation";
 
 type SearchParams = Promise<{
