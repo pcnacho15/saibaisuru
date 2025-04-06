@@ -1,51 +1,50 @@
-import { CultivoType, SemillasType } from "@/interfaces/Product";
+"use client";
+
+// import { CultivoType, SemillasType } from "@/interfaces/Product";
 import { useFilterStore } from "@/store/productStore";
 import { useEffect, useRef } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/utils/accordion";
-import { Checkbox } from "../ui/utils/checkbox";
+import {
+  Accordion,
+  // AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/utils/accordion";
+// import { Checkbox } from "../ui/utils/checkbox";
 
+export const ProductsFilter = () => {
+  // const semillasSelect = useFilterStore().semillas;
+  // const setSemillasFilter = useFilterStore().setSemillaFilter;
 
-interface Props {
-  semillas?: { tipo: SemillasType }[];
-  cultivos?: { cultivo: CultivoType }[];
-}
-
-export const ProductsFilter = ({ semillas, cultivos }: Props) => {
-  
-  const semillasSelect = useFilterStore().semillas;
-  const setSemillasFilter = useFilterStore().setSemillaFilter;
-
-  const cultivosSelect = useFilterStore().cultivos;
-  const setCultivosSelect = useFilterStore().setCultivoFilter;
+  // const cultivosSelect = useFilterStore().cultivos;
+  // const setCultivosSelect = useFilterStore().setCultivoFilter;
 
   const divRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-      const handleScroll = () => {
-        if (divRef.current) {
-          // Verifica si el scroll está por encima de 100px
-          if (window.scrollY >= 120) {
-            divRef.current.style.top = "4rem"; // Cambiar a top 0 si scrolleas más de 100px
-          } else {
-            divRef.current.style.top = "12rem"; // Cambiar a top 50px si estás por encima de 100px
-          }
+  useEffect(() => {
+    const handleScroll = () => {
+      if (divRef.current) {
+        // Verifica si el scroll está por encima de 100px
+        if (window.scrollY >= 120) {
+          divRef.current.style.top = "4rem"; // Cambiar a top 0 si scrolleas más de 100px
+        } else {
+          divRef.current.style.top = "12rem"; // Cambiar a top 50px si estás por encima de 100px
         }
-      };
+      }
+    };
 
-      // Añadir el event listener de scroll
-      window.addEventListener("scroll", handleScroll);
+    // Añadir el event listener de scroll
+    window.addEventListener("scroll", handleScroll);
 
-      // Limpiar el event listener cuando se desmonte el componente
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
-  
-  
+    // Limpiar el event listener cuando se desmonte el componente
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div
       ref={divRef}
-      className={`hidden md:z-10 md:block md:fixed md:w-48 overflow-auto transition-all duration-300`}
+      className={`hidden md:z-10 md:block md:fixed md:w-48 overflow-auto transition-all duration-300 bg-white`}
       style={{ top: "12rem" }} // Posición inicial
     >
       <Accordion
@@ -58,7 +57,7 @@ export const ProductsFilter = ({ semillas, cultivos }: Props) => {
           autoFocus
         >
           <AccordionTrigger>Tipo Semillas</AccordionTrigger>
-          <AccordionContent>
+          {/* <AccordionContent>
             {semillas?.map((item, index) => (
               <div
                 key={index}
@@ -77,7 +76,7 @@ export const ProductsFilter = ({ semillas, cultivos }: Props) => {
                 </label>
               </div>
             ))}
-          </AccordionContent>
+          </AccordionContent> */}
         </AccordionItem>
 
         {/* <AccordionItem value="item-2">
@@ -106,7 +105,7 @@ export const ProductsFilter = ({ semillas, cultivos }: Props) => {
 
         <AccordionItem value="item-3">
           <AccordionTrigger>Cultivos</AccordionTrigger>
-          <AccordionContent>
+          {/* <AccordionContent>
             {cultivos?.map((item, index) => (
               <div
                 key={`${item}-${index}`}
@@ -125,9 +124,9 @@ export const ProductsFilter = ({ semillas, cultivos }: Props) => {
                 </label>
               </div>
             ))}
-          </AccordionContent>
+          </AccordionContent> */}
         </AccordionItem>
       </Accordion>
     </div>
   );
-}
+};

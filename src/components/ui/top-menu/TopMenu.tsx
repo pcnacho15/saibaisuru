@@ -80,20 +80,20 @@ export const TopMenu = () => {
           Semillas
         </Link>
         <Link
-          className={`m-2 p-2 rounded-md hover:text-purple-900 transition-all duration-200 font-semibold ${
-            pathActive === "/categories/esquejes" && "text-principal"
-          }`}
-          href="/categories/esquejes"
-        >
-          Esquejes
-        </Link>
-        <Link
           className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
             pathActive === "/categories/cultivo" && "text-purple-900"
           }`}
           href="/categories/cultivo"
         >
           Cultivo
+        </Link>
+        <Link
+          className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
+            pathActive === "/categories/kits" && "text-purple-900"
+          }`}
+          href="/categories/kits"
+        >
+          Kits
         </Link>
       </div>
 

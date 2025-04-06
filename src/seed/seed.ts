@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 
-type ValidCategories = "semillas" | "esquejes" | "cultivo" | "otros";
+type ValidCategories = "semillas" | "esquejes" | "cultivo" | "kits";
 type ValidTypes =
   | "feminizada"
   | "automatica"
@@ -64,7 +64,7 @@ export const initialData: SeedData = {
       rol: "user",
     },
   ],
-  categorias: ["semillas", "esquejes", "cultivo"],
+  categorias: ["semillas", "esquejes", "cultivo", "kits"],
   subCategorias: [
     {
       nombre: "feminizada",

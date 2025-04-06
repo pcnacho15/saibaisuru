@@ -1,5 +1,5 @@
 import { getCategoryWithId, getPaginatedProductsWithImages } from "@/actions";
-import { ProductGrid, Title } from "@/components";
+import { Pagination, ProductGrid, Title } from "@/components";
 import { notFound } from "next/navigation";
 
 type Params = Promise<{
@@ -21,14 +21,15 @@ export default async function CategoryPage(props: {
   const currentParams = await props.searchParams;
   const page = currentParams.page ? parseInt(currentParams.page) : 1;
 
-  const { products /*totalPages*/ } = await getPaginatedProductsWithImages({
+  const { products, totalPages } = await getPaginatedProductsWithImages({
     page,
     categoryId: categoryDB.id,
   });
 
   const labels: Record<string, string> = {
     semillas: "Semillas",
-    esquejes: "Esquejes",
+    // esquejes: "Esquejes",
+    kits: "Kits",
     cultivo: "Cultivo",
   };
 
@@ -44,7 +45,7 @@ export default async function CategoryPage(props: {
           <ProductGrid products={products} />
         </div>
       </div>
-      {/* <Pagination totalPages={totalPages} /> */}
+      {totalPages > 1 && <Pagination totalPages={totalPages} />}
     </>
   );
 }
