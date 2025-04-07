@@ -65,7 +65,7 @@ export default async function ProductPage(props: { params: Params }) {
   if (product.contenido === 0) product.contenido = null;
   if (product.descuento === 0) product.descuento = null;
 
-  const elementosDesc = product.descripcion.split("|");
+
 
   return (
     <>
@@ -99,7 +99,7 @@ export default async function ProductPage(props: { params: Params }) {
               {product.subCategoria.nombre}
             </span>
           )}
-          {product.contenido && ( 
+          {product.contenido && (
             <div className="flex items-center w-full justify-start gap-2 rounded h-6 lg:h-auto lg:mr-8 pr-1 mt-5">
               <span className="text-base text-neutral-700 font-semibold">
                 Contenido:{" "}
@@ -152,11 +152,13 @@ export default async function ProductPage(props: { params: Params }) {
                 Descripción
               </AccordionTrigger>
               <AccordionContent>
-                <p className="text-lg">
+                <p className="text-lg flex flex-col gap-2">
                   <span className="font-bold capitalize">{product.titulo}</span>{" "}
                   {/* {product.descripcion} */}
-                  {elementosDesc.map((item, index) => (
-                    <span key={index} className="block mt-2">
+                  {product.descripcion.split('|').map((item, index) => (
+                    <span
+                      key={index}
+                    >
                       {item}
                     </span>
                   ))}
@@ -177,16 +179,18 @@ export default async function ProductPage(props: { params: Params }) {
                 </ul>
               </AccordionContent>
             </AccordionItem> */}
-            {
-              product.notas && (
-            <AccordionItem value="item-2">
-              <AccordionTrigger className="text-base">Efectos</AccordionTrigger>
-              <AccordionContent className="text-lg">
-                {product.notas}
-              </AccordionContent>
-            </AccordionItem>
-              )
-            }
+            {product.notas && (
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-base">
+                  Efectos
+                </AccordionTrigger>
+                <AccordionContent className="text-lg flex flex-col gap-2">
+                  {product.notas.split("|").map((item, index) => (
+                      <span key={index}>{item}</span>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            )}
           </Accordion>
 
           {/* Detalles de envío */}

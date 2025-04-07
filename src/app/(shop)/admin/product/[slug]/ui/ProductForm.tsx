@@ -120,7 +120,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
         <div className="flex flex-col mb-2">
           <span>Descripción</span>
           <textarea
-            rows={2}
+            rows={4}
             className="p-2 border rounded-md bg-gray-200"
             {...register("descripcion", { required: true })}
           ></textarea>
@@ -129,7 +129,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
         <div className="flex flex-col mb-2">
           <span>Notas</span>
           <textarea
-            rows={2}
+            rows={4}
             className="p-2 border rounded-md bg-gray-200"
             {...register("notas", { required: false })}
           ></textarea>
