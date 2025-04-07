@@ -62,6 +62,11 @@ export default async function ProductPage(props: { params: Params }) {
 
   if (!product) notFound();
 
+  if (product.contenido === 0) product.contenido = null;
+  if (product.descuento === 0) product.descuento = null;
+
+  const elementosDesc = product.descripcion.split("|");
+
   return (
     <>
       <div className="mt-10 mb-20 grid grid-cols-1 md:grid-cols-2 gap-8 lg:w-3/4 m-auto">
@@ -94,7 +99,7 @@ export default async function ProductPage(props: { params: Params }) {
               {product.subCategoria.nombre}
             </span>
           )}
-          {product.contenido && (
+          {product.contenido && ( 
             <div className="flex items-center w-full justify-start gap-2 rounded h-6 lg:h-auto lg:mr-8 pr-1 mt-5">
               <span className="text-base text-neutral-700 font-semibold">
                 Contenido:{" "}
@@ -149,7 +154,12 @@ export default async function ProductPage(props: { params: Params }) {
               <AccordionContent>
                 <p className="text-lg">
                   <span className="font-bold capitalize">{product.titulo}</span>{" "}
-                  {product.descripcion}
+                  {/* {product.descripcion} */}
+                  {elementosDesc.map((item, index) => (
+                    <span key={index} className="block mt-2">
+                      {item}
+                    </span>
+                  ))}
                 </p>
               </AccordionContent>
             </AccordionItem>

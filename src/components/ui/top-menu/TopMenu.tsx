@@ -15,8 +15,13 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cartStore";
 import { BiLogIn } from "react-icons/bi";
+import { Categoria } from "@/interfaces/Category";
 
-export const TopMenu = () => {
+interface Props {
+  categories: Categoria[];
+}
+
+export const TopMenu = ({ categories }: Props) => {
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
 
@@ -69,17 +74,21 @@ export const TopMenu = () => {
           }`}
           href="/"
         >
-          Inicio
+          inicio
         </Link>
-        <Link
-          className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
-            pathActive === "/categories/semillas" && "text-purple-900"
-          }`}
-          href="/categories/semillas"
-        >
-          Semillas
-        </Link>
-        <Link
+        {categories.map((category) => (
+          <Link
+            key={category.id}
+            className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
+              pathActive === `/categories/${category.nombre}` &&
+              "text-purple-900"
+            }`}
+            href={`/categories/${category.nombre}`}
+          >
+            {category.nombre}
+          </Link>
+        ))}
+        {/* <Link
           className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
             pathActive === "/categories/cultivo" && "text-purple-900"
           }`}
@@ -94,7 +103,7 @@ export const TopMenu = () => {
           href="/categories/kits"
         >
           Kits
-        </Link>
+        </Link> */}
       </div>
 
       {/* Buscar, Carrito, Menu */}

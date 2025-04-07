@@ -256,7 +256,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           {...register("numeroDocumento", {
             required:
               "El número de documento es requerido para generar la factura de tu compra",
-            minLength: 10,
+            minLength: 6,
           })}
         />
         {errors.numeroDocumento && (

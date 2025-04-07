@@ -1,20 +1,19 @@
 // import { getFiltersProduct } from "@/actions";
 // import { FilterSidebar } from "../ui/filter-side-bar/FilterSideBar";
 
-interface Props {
-  tipo: string;
-}
+import { getFiltersProduct } from "@/actions";
+import { FilterSidebar } from "../ui/filter-side-bar/FilterSideBar";
 
-export const ProductFilterMenu = async ({ tipo }: Props) => {
-  // const tipoSemillas = await getFiltersProduct(tipo);
-  console.log(tipo)
+
+
+export const ProductFilterMenu = async () => {
+  const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
+
+
   return (
-    <div>FilterProductMenu</div>
-  )
-  // return (
-  //   <FilterSidebar
-  //     // colores={colores}
-  //     semillas={tipoSemillas}
-  //   />
-  // );
+    <FilterSidebar
+      tipoSemillas={tipoSemillas}
+      tipoCultivos={tipoCultivos}
+    />
+  );
 };

@@ -1,5 +1,6 @@
-import { getCategoryWithId, getPaginatedProductsWithImages } from "@/actions";
+import { getCategoryWithId, getFiltersProduct, getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
+import { ProductsFilter } from "@/components/products/ProductsFilter";
 import { notFound } from "next/navigation";
 
 type Params = Promise<{
@@ -33,6 +34,8 @@ export default async function CategoryPage(props: {
     cultivo: "Cultivo",
   };
 
+   const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
+
   return (
     <>
       <Title
@@ -40,8 +43,20 @@ export default async function CategoryPage(props: {
         subtitle={category}
       />
 
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-full md:w-3/4">
+      <div className="flex gap-12 mt-5">
+        {/* {
+          products.length > 0 ? ( */}
+
+        <ProductsFilter
+          tipoSemillas={tipoSemillas}
+          tipoCultivos={tipoCultivos}
+          // tipoKits={tipoKits}
+          category={category}
+        />
+        {/* )
+          : ''
+        } */}
+        <div className="w-full md:w-[90%]">
           <ProductGrid products={products} />
         </div>
       </div>

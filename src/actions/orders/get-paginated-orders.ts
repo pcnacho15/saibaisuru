@@ -3,7 +3,15 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@/utils";
 
-export const getPaginatedOrders = async () => {
+interface Pagination {
+  page?: number;
+  take?: number;
+}
+
+export const getPaginatedOrders = async ({
+  page = 1,
+  take = 12,
+}: Pagination) => {
   const session = await auth();
 
   if (session?.user.rol !== "admin") {
@@ -13,7 +21,12 @@ export const getPaginatedOrders = async () => {
     };
   }
 
+  if (isNaN(page)) page = 1;
+  if (page < 1) page = 1;
+
   const orders = await prisma.order.findMany({
+    take: take,
+    skip: (page - 1) * take,
     orderBy: {
       fecha_crea: "desc",
     },
@@ -27,8 +40,14 @@ export const getPaginatedOrders = async () => {
     },
   });
 
+  // Obtener total de todos los productos
+  const totalCount = await prisma.order.count();
+  const totalPages = Math.ceil(totalCount / take);
+
   return {
     ok: true,
+    currentPage: page,
+    totalPages: totalPages,
     orders: orders,
   };
 };

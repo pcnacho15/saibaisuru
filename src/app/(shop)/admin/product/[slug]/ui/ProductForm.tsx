@@ -7,7 +7,7 @@ import {
   Product,
   producto_imagenes as ProductWithImage,
 } from "@/interfaces/Product";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 // import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -35,7 +35,7 @@ interface FormInputs {
 }
 
 export const ProductForm = ({ product, categories, subCategories }: Props) => {
-  // const router = useRouter();
+  const router = useRouter();
   // const [errorMessage, setErrorMessage] = useState("");
 
   const {
@@ -82,14 +82,14 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
       }
     }
 
-    /*const { ok, product: updatedProduct } =*/ await createUpdateProduct(formData);
+    const { ok, product: updatedProduct } = await createUpdateProduct(formData);
 
-    // if (!ok) {
-    //   alert("Producto no se pudo actualizar");
-    //   return;
-    // }
+    if (!ok) {
+      alert("Producto no se pudo actualizar");
+      return;
+    }
 
-    // router.replace(`/admin/product/${updatedProduct?.slug}`);
+    router.replace(`/admin/product/${updatedProduct?.slug}`);
   };
 
   return (
@@ -149,7 +149,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
           <input
             type="number"
             className="p-2 border rounded-md bg-gray-200"
-            {...register("cantidad", { required: true })}
+            {...register("cantidad", { required: true, min: 1 })}
           />
         </div>
 

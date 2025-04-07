@@ -25,19 +25,17 @@ const productSchema = z.object({
     .transform((val) => Number(val.toFixed(0))),
   contenido: z.coerce
     .number()
+    .nullish()
     .optional()
     .transform((val) => Number(val?.toFixed(0))),
   descuento: z.coerce
     .number()
+    .nullish()
     .optional()
     .transform((val) => Number(val?.toFixed(0))),
   categorias_id: z.string().uuid(),
   sub_categorias_id: z.string().uuid(),
 });
-
-
-
-
 
 export const createUpdateProduct = async (formData: FormData) => {
   const data = Object.fromEntries(formData);
@@ -51,9 +49,7 @@ export const createUpdateProduct = async (formData: FormData) => {
     const product = productParsed.data;
     product.slug = product.slug.toLowerCase().replace(/ /g, "-").trim();
 
-    product.slug = product.slug.toLowerCase().replace(/ /g, "-").trim();
-
-    const { id, ...rest } = product;
+    const { id, contenido, descuento, ...rest } = product;
 
     try {
       const prismaTx = await prisma.$transaction(async (tx) => {
@@ -64,6 +60,8 @@ export const createUpdateProduct = async (formData: FormData) => {
             where: { id },
             data: {
               ...rest,
+              contenido: contenido === 0 ? null : contenido,
+              descuento: descuento === 0 ? null : descuento,
             },
           });
         } else {
@@ -71,6 +69,8 @@ export const createUpdateProduct = async (formData: FormData) => {
           product = await tx.productos.create({
             data: {
               ...rest,
+              contenido: contenido === 0 ? null : contenido,
+              descuento: descuento === 0 ? null : descuento,
             },
           });
         }

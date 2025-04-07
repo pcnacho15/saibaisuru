@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { Pagination, Title } from "@/components";
-import { getPaginatedProductsWithImages } from "@/actions";
 import { currencyFormat } from "@/utils";
-import { ProductImage } from "@/components/product/product-image/ProductImage";
+import { getPaginatedOrders } from "@/actions/orders/get-paginated-orders";
+import clsx from "clsx";
 // import { getPaginatedOrders } from "@/actions/orders/get-paginated-orders";
-
 
 type SearchParams = Promise<{
   page?: string;
@@ -18,7 +17,7 @@ export default async function ProductsAdminPage(props: {
   const currentParams = await props.searchParams;
   const currentPage = currentParams.page ? parseInt(currentParams.page) : 1;
 
-  const { products, totalPages } = await getPaginatedProductsWithImages({
+  const { orders, totalPages } = await getPaginatedOrders({
     page: currentPage,
   });
 
@@ -26,19 +25,10 @@ export default async function ProductsAdminPage(props: {
   //   redirect("/");
   // }
 
+
   return (
     <>
-      <Title title="Mantenimiento de productos" />
-
-      <div className="flex justify-end mb-5">
-        <Link
-          href={"/admin/product/new"}
-          className="text-center hover:bg-purple-900 bg-purple-600 rounded-md text-white hover:cursor-pointer hover:scale-105 duration-200 transition-all shadow-md p-2"
-        >
-          Agregar
-        </Link>
-      </div>
-
+      <Title title="Seguimiento de órdenes" />
       <div className="mb-10">
         <table className="min-w-full">
           <thead className="bg-gray-200 border-b">
@@ -47,104 +37,120 @@ export default async function ProductsAdminPage(props: {
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Imagen
+                ID #
               </th>
               <th
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Titulo
+                Ref Epayco #
               </th>
               <th
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Precio
+                Transaction ID #
               </th>
               <th
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Categoria
+                Estado Orden
               </th>
               <th
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Sub Categoria
+                Estado Envío
               </th>
               <th
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Inventario
+                Costo Envío
               </th>
               <th
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Descuento %
+                Sub total
+              </th>
+              <th
+                scope="col"
+                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+              >
+                Total
+              </th>
+              <th
+                scope="col"
+                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+              >
+                Opciones
               </th>
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {orders?.map((order) => (
               <tr
-                key={product.id}
+                key={order.id}
                 className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  <Link href={`/product/${product.slug}`}>
-                    <ProductImage
-                      src={product.images[0]}
-                      width={80}
-                      height={80}
-                      alt={product.titulo}
-                      className="w-20 h-20 object-cover rounded"
-                    />
-                  </Link>
+                  <Link href={`/orders/${order.id}`}>{order.id}</Link>
                 </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Link
-                    href={`/admin/product/${product.slug}`}
-                    className="hover:underline"
-                  >
-                    {product.titulo}
-                  </Link>
+                <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+                  {order.ref_epayco}
                 </td>
                 <td className="text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  {currencyFormat(product.precio)}
+                  {order.transaction_id}
                 </td>
-                <td className="text-sm text-gray-900 font-light px-6 ">
-                  {product.categoria.nombre}
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 ">
-                  {product.subCategoria.nombre}
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 ">
-                  {product.cantidad}
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 ">
-                  {product.descuento ? (
-                    <span>{product.descuento}%</span>
-                  ) : (
-                    <span>0%</span>
+                <td
+                  className={clsx(
+                    "text-sm font-light px-6 py-4 whitespace-nowrap",
+                    {
+                      "text-blue-600": order.estado_order === "pendiente",
+                      "text-green-600": order.estado_order === "pagada",
+                      "text-red-600": order.estado_order === "rechazada",
+                    }
                   )}
+                >
+                  <button>{order.estado_order}</button>
                 </td>
-                {/* <td className="text-sm text-gray-900 font-light px-6 ">
+                <td
+                  className={clsx(
+                    "text-sm font-light px-6 py-4 whitespace-nowrap",
+                    {
+                      "text-orange-600": order.estado_envio === "enviando",
+                      "text-blue-600": order.estado_envio === "enviado",
+                      "text-green-600": order.estado_envio === "entregado",
+                    }
+                  )}
+                >
+                  <button>{order.estado_envio}</button>
+                </td>
+                <td className="text-sm text-gray-900 font-light px-6 ">
+                  {currencyFormat(order.costo_envio ?? 0)}
+                </td>
+                <td className="text-sm text-gray-900 font-light px-6 ">
+                  {currencyFormat(order.sub_total)}
+                </td>
+                <td className="text-sm text-gray-900 font-light px-6 ">
+                  {currencyFormat(order.total)}
+                </td>
+                <td className="text-sm text-blue-600 font-light px-6 ">
                   <Link
                     href={`/orders/${order.id}`}
                     className="hover:underline"
                   >
                     Ver orden
                   </Link>
-                </td> */}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {totalPages > 1 && <Pagination totalPages={totalPages} />}
+      {totalPages! > 1 && <Pagination totalPages={totalPages!} />}
     </>
   );
 }

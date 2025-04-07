@@ -1,6 +1,6 @@
-import { getPaginatedProductsWithImages } from "@/actions";
+import { getFiltersProduct, getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
-// import { ProductsFilter } from "@/components/products/ProductsFilter";
+import { ProductsFilter } from "@/components/products/ProductsFilter";
 import { redirect } from "next/navigation";
 
 type SearchParams = Promise<{
@@ -19,21 +19,33 @@ export default async function Home(props: { searchParams: SearchParams }) {
     redirect("/");
   }
 
+  const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
+
   return (
     <>
       <Title
         title="Tienda"
         subtitle="Todos nuestros productos"
       />
-        <div className="flex flex-col items-center justify-center">
-        {/* <ProductsFilter
-        // marcas={marcas}
-        // colores={colores}
-        /> */}
-          <div className="w-full md:w-10/12">
-            <ProductGrid products={products} />
-          </div>
+      {/* <div className="flex flex-col items-center justify-center">
+        <div className="w-full">
+          <ProductsFilter
+          // marcas={marcas}
+          // colores={colores}
+          />
+          <ProductGrid products={products} />
         </div>
+      </div> */}
+
+      <div className="flex gap-12 mt-5">
+        <ProductsFilter
+          tipoSemillas={tipoSemillas}
+          tipoCultivos={tipoCultivos}
+        />
+        <div className="w-full md:w-[90%]">
+          <ProductGrid products={products} />
+        </div>
+      </div>
       {totalPages > 1 && <Pagination totalPages={totalPages} />}
     </>
   );

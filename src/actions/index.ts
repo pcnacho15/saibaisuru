@@ -14,7 +14,8 @@ export * from "./product/get-product-by-slog";
 export * from "./product/get-product-stock";
 
 //* Categories
-export * from "./categories/categoryActions";
+export * from "./categories/get-categories-by-id";
+export * from "./categories/get-categories";
 export * from "./categories/get-sub-categories";
 
 //* Checkout

@@ -12,18 +12,18 @@ import {
   IoLogOutOutline,
   IoPeopleOutline,
   IoPersonOutline,
-  // IoPhonePortraitOutline,
   // IoSearchOutline,
-  IoShirtOutline,
   IoTicketOutline,
 } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { logout } from "@/actions";
 import { RiSeedlingLine } from "react-icons/ri";
-import { MdOutlineLocalFlorist } from "react-icons/md";
-import { PiShovel } from "react-icons/pi";
+import { MdOutlineCategory } from "react-icons/md";
+import { PiMailbox, PiShovel } from "react-icons/pi";
 import { BiLogIn } from "react-icons/bi";
+import { TbCategoryPlus } from "react-icons/tb";
+
 
 export const Sidebar = () => {
 
@@ -102,8 +102,7 @@ export const Sidebar = () => {
           <Link
             onClick={() => closeMenu()}
             className={`flex items-center gap-3 text-xl mt-10 p-2 rounded transition-all ${
-              pathName === "/categories/celulares" &&
-              "bg-gray-100 font-semibold"
+              pathName === "/categories/semillas" && "bg-gray-100 font-semibold"
             }`}
             href="/categories/semillas"
           >
@@ -113,19 +112,7 @@ export const Sidebar = () => {
           <Link
             onClick={() => closeMenu()}
             className={`flex items-center gap-3 text-xl mt-10 p-2 rounded transition-all ${
-              pathName === "/categories/accesorios" &&
-              "bg-gray-100 font-semibold"
-            }`}
-            href="/categories/esquejes"
-          >
-            <MdOutlineLocalFlorist size={30} />
-            <span>Esquejes</span>
-          </Link>
-          <Link
-            onClick={() => closeMenu()}
-            className={`flex items-center gap-3 text-xl mt-10 p-2 rounded transition-all ${
-              pathName === "/categories/accesorios" &&
-              "bg-gray-100 font-semibold"
+              pathName === "/categories/cultivo" && "bg-gray-100 font-semibold"
             }`}
             href="/categories/cultivo"
           >
@@ -167,8 +154,26 @@ export const Sidebar = () => {
               onClick={() => closeMenu()}
               className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
             >
-              <IoShirtOutline size={30} />
+              <RiSeedlingLine size={30} />
               <span className="ml-3 text-xl">Productos</span>
+            </Link>
+
+            <Link
+              href="/admin/categories"
+              onClick={() => closeMenu()}
+              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+              <MdOutlineCategory size={30} />
+              <span className="ml-3 text-xl">Categorias</span>
+            </Link>
+
+            <Link
+              href="/admin/subcategories"
+              onClick={() => closeMenu()}
+              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+              <TbCategoryPlus size={30} />
+              <span className="ml-3 text-xl">Sub Categorias</span>
             </Link>
 
             <Link
@@ -176,7 +181,7 @@ export const Sidebar = () => {
               onClick={() => closeMenu()}
               className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
             >
-              <IoTicketOutline size={30} />
+              <PiMailbox size={30} />
               <span className="ml-3 text-xl">Ordenes</span>
             </Link>
 
@@ -196,7 +201,7 @@ export const Sidebar = () => {
         {isAuthenticated ? (
           <button
             onClick={() => onLogout()}
-            className="flex w-full items-center p-2 text-red-600 bg-gray-50 hover:bg-gray-100 rounded transition-all"
+            className="flex w-full items-center p-2 text-red-600 hover:bg-gray-100 rounded transition-all"
           >
             <IoLogOutOutline size={30} />
             <span className="ml-1 text-xl">Salir</span>
@@ -204,7 +209,7 @@ export const Sidebar = () => {
         ) : (
           <Link
             href="/auth/login"
-            className="flex w-full items-center p-2 text-blue-600 bg-gray-50 hover:bg-gray-100 rounded transition-all"
+            className="flex w-full items-center p-2 text-blue-600 hover:bg-gray-100 rounded transition-all"
           >
             <span className="ml-1 text-xl">Ingresar</span>
             <BiLogIn size={30} />

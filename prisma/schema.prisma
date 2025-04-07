@@ -49,7 +49,7 @@ model categorias {
 
 model sub_cagegorias {
   id     String @id @default(uuid())
-  nombre String
+  nombre String @unique
 
   categoria     categorias  @relation(fields: [categorias_id], references: [id])
   categorias_id String
