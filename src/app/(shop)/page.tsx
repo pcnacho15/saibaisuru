@@ -37,7 +37,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
         </div>
       </div> */}
 
-      <div className="flex mt-5  md:px-10">
+      <div className="flex mt-5">
         <ProductsFilter
           tipoSemillas={tipoSemillas}
           tipoCultivos={tipoCultivos}

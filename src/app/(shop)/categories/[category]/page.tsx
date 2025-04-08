@@ -56,7 +56,7 @@ export default async function CategoryPage(props: {
         {/* )
           : ''
         } */}
-        <div className="w-full md:w-[90%]">
+        <div className="w-full">
           <ProductGrid products={products} />
         </div>
       </div>
