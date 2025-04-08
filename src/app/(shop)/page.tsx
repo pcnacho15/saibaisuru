@@ -37,12 +37,12 @@ export default async function Home(props: { searchParams: SearchParams }) {
         </div>
       </div> */}
 
-      <div className="flex gap-12 mt-5">
+      <div className="flex mt-5  md:px-10">
         <ProductsFilter
           tipoSemillas={tipoSemillas}
           tipoCultivos={tipoCultivos}
         />
-        <div className="w-full md:w-[90%]">
+        <div className="w-full">
           <ProductGrid products={products} />
         </div>
       </div>
