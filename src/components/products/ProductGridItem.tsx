@@ -61,7 +61,7 @@ export const ProductGridItem = ({ product }: Props) => {
   if (product.descuento === 0) product.descuento = null;
 
   return (
-    <div className="flex flex-col overflow-hidden fade-in w-[80%] h-full">
+    <div className="flex flex-col overflow-hidden fade-in w-full md:w-[80%] h-full">
       <Link
         href={`/product/${product.slug}`}
         className="hover:rotate-1 transition-all duration-300"
@@ -69,7 +69,7 @@ export const ProductGridItem = ({ product }: Props) => {
         <ProductImage
           src={product.images[0]}
           alt={product.titulo}
-          className="w-[95%] object-cover rounded-[50px]"
+          className="w-full md:w-[95%] object-cover rounded-[50px]"
           width={400}
           height={400}
           //   onMouseEnter={() => setDisplayImage(product.images[1])}
