@@ -3,6 +3,7 @@ import "./globals.css";
 import { firstFont } from "@/config/fonts";
 import { Provider } from "@/provider/Provider";
 import { ToastContainer } from "react-toastify";
+import AgeGateModal from "@/components/auth/age-gate-modal";
 
 export const metadata: Metadata = {
   title: "Saibai Suru",
@@ -17,7 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${firstFont.className} bg-gray-100`}>
-        <Provider>{children}</Provider>
+        <AgeGateModal />
+        <Provider>
+          {children}
+        </Provider>
         <ToastContainer />
       </body>
     </html>
