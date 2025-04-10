@@ -46,8 +46,16 @@ export async function generateMetadata(props: {
     openGraph: {
       title: `SaibaiSuru | ${product?.titulo ?? "Producto no encontrado"}`,
       description: product?.descripcion ?? "",
+      siteName: "SaibaiSuru",
+      url: `https://saibaisuru.com/product/${slug}`,
       // images: [], // https://misitioweb.com/products/image.png
-      images: [`${product?.images[0]}`],
+      images: [
+        {
+          url: `${product?.images[0]}`,
+        },
+      ],
+      locale: "es_CO",
+      type: "website",
     },
   };
 }
