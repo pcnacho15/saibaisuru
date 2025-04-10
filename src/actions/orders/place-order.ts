@@ -93,18 +93,9 @@ export const placeOrder = async (
       });
 
       //* Calcular costo de envío
-      const costoEnvio = 20000;
+      const costoEnvio = 14000;
       const totalConEnvio = total + costoEnvio;
-
-      // if (productIds.length > 4) {
-      //   costoEnvio = 40000;
-      //   total += costoEnvio;
-      // } else {
-      //   costoEnvio = 20000;
-      //   total += costoEnvio;
-      // }
-
-      // console.log(userId)
+      
       // 2. Crear la orden - Encabezado - Detalles
       const order = await tx.order.create({
         data: {

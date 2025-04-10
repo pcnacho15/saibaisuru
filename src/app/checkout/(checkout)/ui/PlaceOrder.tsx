@@ -16,6 +16,7 @@ import { useAdresStore } from "@/store/adresStore";
 import { useCartStore } from "@/store/cartStore";
 import { placeOrder } from "@/actions/orders/place-order";
 import { EPayco } from "@/interfaces/OrderItem";
+// import { useRouter } from "next/navigation";
 // import { createPreferenceMP } from "@/modules/pagos/actions/mercado-pago/create-prefecence";
 // import Script from "next/script";
 // import { Epayco } from "@/modules/pagos/components/Epayco";
@@ -46,8 +47,7 @@ export const PlaceOrder = () => {
 
   useEffect(() => {
     //* Calcular costo de envío
-
-    setTotalOrder(total + 20000);
+    setTotalOrder(total + 14000);
 
     // Verificar si el script ya está cargado para evitar duplicados
     if (!document.querySelector("#epayco-script")) {
@@ -95,47 +95,51 @@ export const PlaceOrder = () => {
   };
 
   const handlePayment = async () => {
-    if (!loaded || !window.ePayco) {
-      console.error(
-        "Epayco aún no está cargado. Por favor, espera unos segundos y vuelve a intentarlo."
-      );
-      return;
+    try {
+      if (!loaded || !window.ePayco) {
+        console.error(
+          "Epayco aún no está cargado. Por favor, espera unos segundos y vuelve a intentarlo."
+        );
+        return;
+      }
+
+      const handler = window.ePayco.checkout.configure({
+        key: process.env.NEXT_PUBLIC_EPAYCO_KEY,
+        test: false, // Cambiar a false en producción
+      });
+
+      const resp = await onPlaceOrder();
+      // console.log()
+
+      const productos = resp?.updatedProducts.map((p) => p.titulo).join(", ");
+      // console.log(productos);
+
+      const data = {
+        name: "SaibaiSuru",
+        description: productos,
+        invoice: resp!.order.id,
+        currency: "cop",
+        amount: resp?.order.total.toString(),
+        tax_base: "0",
+        tax: resp?.order.tax?.toString(),
+        country: "CO",
+        lang: "es",
+        external: "false",
+        response: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/orders/${
+          resp!.order?.id
+        }`,
+        confirmation: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/api/epayco`,
+        // method_confirmation: "post",
+        // extra1: "Información adicional 1",
+      };
+
+      handler.open(data);
+
+      //* Todo salió bien!
+      clearCart();
+    } catch (error) {
+      console.log(error);
     }
-
-    const handler = window.ePayco.checkout.configure({
-      key: process.env.NEXT_PUBLIC_EPAYCO_KEY,
-      test: false, // Cambiar a false en producción
-    });
-
-    const resp = await onPlaceOrder();
-    // console.log()
-
-    const productos = resp?.updatedProducts.map((p) => p.titulo).join(", ");
-    // console.log(productos);
-
-    const data = {
-      name: "Celuantioquia",
-      description: productos,
-      invoice: resp!.order.id,
-      currency: "cop",
-      amount: resp?.order.total.toString(),
-      tax_base: "0",
-      tax: resp?.order.tax?.toString(),
-      country: "CO",
-      lang: "es",
-      external: "false",
-      response: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/orders/${
-        resp!.order?.id
-      }`,
-      confirmation: `${process.env.NEXT_PUBLIC_PAYCO_RESPONSE_URL}/api/epayco`,
-      // method_confirmation: "post",
-      // extra1: "Información adicional 1",
-    };
-
-    handler.open(data);
-
-    //* Todo salió bien!
-    clearCart();
   };
 
   if (!loaded) {
@@ -144,7 +148,7 @@ export const PlaceOrder = () => {
 
   return (
     <>
-      <div className="rounded-xl shadow-xl pt-2 px-7 bg-white">
+      <div className="rounded-xl shadow-xl pt-4 px-7 bg-white">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2 md:mb-1">
           <h2 className={` text-xl mb-2 font-semibold`}>
             Dirección de entrega
@@ -189,7 +193,7 @@ export const PlaceOrder = () => {
           </span>
           <span className="mt-2 text-lg">Envío</span>
           <span className="text-right mt-2 text-lg">
-            {currencyFormat(20000)}
+            {currencyFormat(14000)}
           </span>
 
           {/* <span>Impuestos (15%)</span>
@@ -247,8 +251,10 @@ export const PlaceOrder = () => {
             onClick={handlePayment}
             disabled={!loaded}
             className={`${
-              loaded ? "bg-blue-600" : "bg-gray-400"
-            } flex items-center justify-center w-full active:scale-95 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-all duration-200`}
+              loaded
+                ? "bg-gradient-to-r from-purple-700 to-purple-600"
+                : "bg-gray-400"
+            } flex items-center justify-center w-full text-white px-4 py-2 rounded active:scale-95 transition-all duration-200`}
           >
             {loaded || !isPlacingOrder ? "Pagar con Epayco" : "Cargando..."}
           </button>
@@ -261,7 +267,7 @@ export const PlaceOrder = () => {
             /> */}
 
               <span
-                className={`flex gap-2 items-center text-sm text-gray-600 font-bold`}
+                className={`flex flex-col lg:flex-row gap-2 items-center text-sm text-gray-600 font-bold`}
               >
                 Pago totalmente seguro con
                 <Image
@@ -274,50 +280,43 @@ export const PlaceOrder = () => {
                 />
               </span>
             </div>
-            {/* <div className="flex items-center justify-center gap-3">
-            <Image
-              src={`/footerCheckout-mercadopago.svg`}
-              alt="mercadopago"
-              width={40}
-              height={40}
-              className="rounded"
-            />
-            <Image
-              src={`/footerCheckout-efecty.svg`}
-              alt="efecty"
-              width={20}
-              height={20}
-              className="rounded"
-            />
-            <Image
-              src={`/footerCheckout-pse.svg`}
-              alt="pse"
-              width={20}
-              height={20}
-              className="rounded"
-            />
-            <Image
-              src={`/footerCheckout-visaLogo.svg`}
-              alt="american"
-              width={20}
-              height={20}
-              className="rounded"
-            />
-            <Image
-              src={`/footerCheckout-american.svg`}
-              alt="american"
-              width={20}
-              height={20}
-              className="rounded"
-            />
-            <Image
-              src={`/footerCheckout-diners.svg`}
-              alt="diners"
-              width={20}
-              height={20}
-              className="rounded"
-            />
-          </div> */}
+            <div className="flex items-center justify-center gap-3 mt-2">
+              <Image
+                src={`/footerCheckout-efecty.svg`}
+                alt="efecty"
+                width={30}
+                height={30}
+                className="rounded"
+              />
+              <Image
+                src={`/footerCheckout-pse.svg`}
+                alt="pse"
+                width={30}
+                height={30}
+                className="rounded"
+              />
+              <Image
+                src={`/footerCheckout-visaLogo.svg`}
+                alt="american"
+                width={30}
+                height={30}
+                className="rounded"
+              />
+              <Image
+                src={`/footerCheckout-american.svg`}
+                alt="american"
+                width={30}
+                height={30}
+                className="rounded"
+              />
+              <Image
+                src={`/footerCheckout-diners.svg`}
+                alt="diners"
+                width={30}
+                height={30}
+                className="rounded"
+              />
+            </div>
           </div>
         </div>
       </div>

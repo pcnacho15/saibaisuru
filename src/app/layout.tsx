@@ -6,8 +6,8 @@ import { ToastContainer } from "react-toastify";
 import AgeGateModal from "@/components/auth/age-gate-modal";
 
 export const metadata: Metadata = {
-  title: "Saibai Suru",
-  description: "Cultiva tu esencia",
+  title: "SaibaiSuru",
+  description: "Un espacio creado por cultivadores, para cultivadores.",
 };
 
 export default function RootLayout({

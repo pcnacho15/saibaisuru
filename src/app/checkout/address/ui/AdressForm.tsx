@@ -33,17 +33,12 @@ interface Props {
 }
 
 export const AdressForm = ({ departamentos, municipios }: Props) => {
-  // console.log(municipios)
   const [municipioSelect, setMunicipioSelect] = useState<Municipio[]>([]);
-  // const [envio, setEnvio] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const router = useRouter();
   const setAdress = useAdresStore((state) => state.setAdress);
   const getAdress = useAdresStore((state) => state.getAdress);
-
-  // useSession({
-  //   required: true,
-  // });
 
   const {
     handleSubmit,
@@ -55,20 +50,14 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
 
   const valueDepartamento = watch("departamento");
 
-  // console.log(isValid);
-
   useEffect(() => {
     setMunicipioSelect(
       municipios.filter((m) => m.departamento_id === Number(valueDepartamento))
     );
     const adress = getAdress();
 
-    // const departamento= Number(adress.departamento);
-    // const municipio = Number(adress.municipio);
-
     const { departamento, municipio, ...resto } = adress;
 
-    // setEnvio( tipoEnvio )
 
     const departmentFound = departamentos.find(
       (d) => d.nombre === departamento
@@ -85,23 +74,20 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
   }, [valueDepartamento, departamentos, getAdress, municipios, reset]);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    // if (envio === 2) {
-    //   return;
-    // }
+
+    setLoaded(true);
 
     const { departamento, municipio, ...resto } = data;
     const departmentById = await getDepartmentById(Number(departamento));
     const municipioById = await getMunicipioById(Number(municipio));
 
-    // console.log(departmentById?.nombre)
-
     setAdress({
       ...resto,
       departamento: departmentById!.nombre,
       municipio: municipioById!.nombre,
-      // tipoEnvio: envio
     });
-    router.replace("/checkout");
+    router.push("/checkout");
+    setLoaded(false);
   };
 
   return (
@@ -119,7 +105,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           type="email"
           placeholder="correo@mail.com"
           className={clsx("p-2 border rounded-md bg-gray-200", {
-            "border-2 border-rose-500": errors.correo,
+            "border-2 border-rose-500 fade-in": errors.correo,
           })}
           {...register("correo", {
             required:
@@ -127,7 +113,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           })}
         />
         {errors.correo && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.correo.message}
           </span>
         )}
@@ -143,7 +129,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           type="text"
           placeholder="Ej: 30548732..."
           className={clsx("p-2 border rounded-md bg-gray-200", {
-            "border-2 border-rose-500": errors.telefono,
+            "border-2 border-rose-500 fade-in": errors.telefono,
           })}
           {...register("telefono", {
             required:
@@ -155,7 +141,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           })}
         />
         {errors.telefono && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.telefono.message}
           </span>
         )}
@@ -171,14 +157,14 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           type="text"
           placeholder="Ej: Fulano"
           className={clsx("p-2 border rounded-md bg-gray-200", {
-            "border-2 border-rose-500": errors.nombres,
+            "border-2 border-rose-500 fade-in": errors.nombres,
           })}
           {...register("nombres", {
             required: "El nombre es un campo requerido para realizar el envío",
           })}
         />
         {errors.nombres && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.nombres.message}
           </span>
         )}
@@ -194,7 +180,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           type="text"
           placeholder="Ej: De tal"
           className={clsx("p-2 border rounded-md bg-gray-200", {
-            "border-2 border-rose-500": errors.apellidos,
+            "border-2 border-rose-500 fade-in": errors.apellidos,
           })}
           {...register("apellidos", {
             required:
@@ -202,7 +188,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           })}
         />
         {errors.apellidos && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.apellidos.message}
           </span>
         )}
@@ -218,7 +204,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           defaultValue={""}
           // className="p-2 border rounded-md bg-gray-200 text-gray-600"
           className={clsx("p-2 border rounded-md bg-gray-200 text-gray-600", {
-            "border-2 border-rose-500": errors.tipoDocumento,
+            "border-2 border-rose-500 fade-in": errors.tipoDocumento,
           })}
           {...register("tipoDocumento", {
             required: "Selecciona un tipo de documento",
@@ -235,7 +221,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           <option value="TI">Tarjeta identidad</option>
         </select>
         {errors.tipoDocumento && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.tipoDocumento.message}
           </span>
         )}
@@ -251,7 +237,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           type="text"
           placeholder="Ej: 100306..."
           className={clsx("p-2 border rounded-md bg-gray-200", {
-            "border-2 border-rose-500": errors.numeroDocumento,
+            "border-2 border-rose-500 fade-in": errors.numeroDocumento,
           })}
           {...register("numeroDocumento", {
             required:
@@ -260,7 +246,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           })}
         />
         {errors.numeroDocumento && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.numeroDocumento.message}
           </span>
         )}
@@ -278,7 +264,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           className={clsx(
             "p-2 border rounded-md bg-gray-200 text-gray-600 capitalize",
             {
-              "border-2 border-rose-500": errors.departamento,
+              "border-2 border-rose-500 fade-in": errors.departamento,
             }
           )}
           {...register("departamento", {
@@ -301,7 +287,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           ))}
         </select>
         {errors.departamento && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.departamento.message}
           </span>
         )}
@@ -318,7 +304,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           className={clsx(
             "p-2 border rounded-md bg-gray-200 text-gray-600 capitalize",
             {
-              "border-2 border-rose-500": errors.municipio,
+              "border-2 border-rose-500 fade-in": errors.municipio,
             }
           )}
           {...register("municipio", {
@@ -342,7 +328,7 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           ))}
         </select>
         {errors.municipio && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.municipio.message}
           </span>
         )}
@@ -358,14 +344,14 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           placeholder="Ej: Carrera 24A # 83-15"
           type="text"
           className={clsx("p-2 border rounded-md bg-gray-200 capitalize", {
-            "border-2 border-rose-500": errors.direccion,
+            "border-2 border-rose-500 fade-in": errors.direccion,
           })}
           {...register("direccion", {
             required: "Por favor índicanos la dirección de tu residencia",
           })}
         />
         {errors.direccion && (
-          <span className={`text-sm text-red-500`}>
+          <span className={`text-sm text-rose-500 fade-in`}>
             {errors.direccion.message}
           </span>
         )}
@@ -388,10 +374,15 @@ export const AdressForm = ({ departamentos, municipios }: Props) => {
           <button
             //   href="/checkout"
             type="submit"
-            // disabled={!isValid}
-            className={
-              "sm:w-1/2 flex items-center text-center justify-center w-full bg-gradient-to-r from-lime-700 to-lime-600 text-white font-semibold hover:cursor-pointer shadow-md  rounded-sm py-2"
-            }
+            disabled={loaded}
+            className={clsx(
+              "sm:w-1/2 flex items-center text-center justify-center w-full text-white font-semibold active:scale-95 transition-all duration-200 shadow-md rounded py-2",
+              {
+                "hover:cursor-pointer bg-gradient-to-r from-purple-700 to-purple-600":
+                  !loaded,
+                " hover:cursor-none bg-gray-400": loaded,
+              }
+            )}
           >
             Ir a pagar
           </button>
