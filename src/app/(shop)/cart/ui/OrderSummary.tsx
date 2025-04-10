@@ -8,13 +8,15 @@ import Image from "next/image";
 import clsx from "clsx";
 
 import { useCartStore } from "@/store/cartStore";
-import { currencyFormat } from "@/utils";
+import { currencyFormat, sleep } from "@/utils";
 
 export const OrderSummary = () => {
   const [loaded, setLoaded] = useState(false);
-  const { subTotal, /*tax*/ total, totalItems } = useCartStore().getSummaryProducts();
+  const [loadButton, setLoadButton] = useState(true);
+  const { subTotal, /*tax*/ total, totalItems } =
+    useCartStore().getSummaryProducts();
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     setLoaded(true);
@@ -24,9 +26,12 @@ export const OrderSummary = () => {
     return <p>Cargando...</p>;
   }
 
-  const handdleNavigation = () => {
+  const handdleNavigation = async () => {
+    setLoadButton(false);
+    await sleep();
     router.push("/checkout/address");
-  }
+    setLoadButton(true);
+  };
 
   return (
     <>
@@ -57,9 +62,14 @@ export const OrderSummary = () => {
       <div className="mt-8 w-full">
         {totalItems > 0 ? (
           <button
-          onClick={handdleNavigation}
+            onClick={handdleNavigation}
             className={clsx(
-              "flex items-center justify-center gap-2 bg-gradient-to-r from-lime-700 to-lime-600 text-gray-50 py-2 px-4 rounded transition-all w-full active:scale-95 duration-300"
+              "flex items-center justify-center gap-2 text-gray-50 py-2 px-4 rounded transition-all w-full duration-300",
+              {
+                "bg-gray-400": !loadButton,
+                "bg-gradient-to-r from-lime-700 to-lime-600 active:scale-95":
+                  loadButton,
+              }
             )}
             // href="/checkout/address"
           >

@@ -36,17 +36,13 @@ export const ProductsPlaceOrder = () => {
       {productsInCart.map((p) => (
         <div
           key={`${p.slug}`}
-          className="flex my-3 px-2 py-5 bg-white shadow-md rounded-xl w-auto"
+          className="flex my-3 pl-6 py-5 bg-white shadow-md rounded-xl w-auto"
         >
           <ProductImage
             src={p.image}
             width={100}
             height={100}
             alt={p.title}
-            style={{
-              width: "100px",
-              height: "100px",
-            }}
             className="mr-5 rounded"
           />
 

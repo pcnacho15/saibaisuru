@@ -57,23 +57,19 @@ export const ProductsInCart = () => {
       {productsInCart.map((p) => (
         <div
           key={`${p.slug}`}
-          className="flex md:items-start my-3 py-5 px-2 shadow-md rounded-md w-auto bg-white"
+          className="flex md:items-start my-3 py-5 pl-6 shadow-md rounded-md w-auto bg-white"
         >
           <ProductImage
             src={p.image}
             width={100}
             height={100}
-            alt={p.title}
-            style={{
-              width: "100px",
-              height: "100px",
-            }}
-            className="mr-5 px-1 rounded"
+            alt={p.slug}
+            className="mr-5 rounded"
           />
 
           <div className="flex flex-col md:justify-start md:items-start">
             <Link
-              className="hover:text-lime-600"
+              className="hover:text-purple-900"
               href={`/product/${p.slug}`}
             >
               <p className={`text-lg capitalize`}>{p.title}</p>
