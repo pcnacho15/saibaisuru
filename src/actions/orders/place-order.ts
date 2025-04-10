@@ -25,6 +25,7 @@ export const placeOrder = async (
   // }
 
   // Obtener información de los productos
+  
 
   const products = await prisma.productos.findMany({
     where: {
@@ -95,7 +96,7 @@ export const placeOrder = async (
       //* Calcular costo de envío
       const costoEnvio = 14000;
       const totalConEnvio = total + costoEnvio;
-      
+
       // 2. Crear la orden - Encabezado - Detalles
       const order = await tx.order.create({
         data: {

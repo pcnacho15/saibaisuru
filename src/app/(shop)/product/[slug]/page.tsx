@@ -41,13 +41,13 @@ export async function generateMetadata(props: {
   // const previousImages = (await parent).openGraph?.images || []
 
   return {
-    title: product?.titulo ?? "Producto no encontrado",
+    title: `SaibaiSuru | ${product?.titulo ?? "Producto no encontrado"}`,
     description: product?.descripcion ?? "",
     openGraph: {
-      title: product?.titulo ?? "Producto no encontrado",
+      title: `SaibaiSuru | ${product?.titulo ?? "Producto no encontrado"}`,
       description: product?.descripcion ?? "",
       // images: [], // https://misitioweb.com/products/image.png
-      images: [`/products/${product?.images[0]}`],
+      images: [`${product?.images[0]}`],
     },
   };
 }

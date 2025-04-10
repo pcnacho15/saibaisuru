@@ -41,10 +41,6 @@ export const PlaceOrder = () => {
 
   const [totalOrder, setTotalOrder] = useState(total);
 
-  // const router = useRouter();
-
-  const clearCart = useCartStore((state) => state.clearCart);
-
   useEffect(() => {
     //* Calcular costo de envío
     setTotalOrder(total + 14000);
@@ -134,9 +130,6 @@ export const PlaceOrder = () => {
       };
 
       handler.open(data);
-
-      //* Todo salió bien!
-      clearCart();
     } catch (error) {
       console.log(error);
     }
