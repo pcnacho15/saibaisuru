@@ -1,6 +1,7 @@
 "use client";
 
 import { createUpdateProduct } from "@/actions/product/create-update-products";
+import { deleteProductImage } from "@/actions/product/delete-product-image";
 import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { Categoria, SubCategoria } from "@/interfaces/Category";
 import {
@@ -255,7 +256,7 @@ export const ProductForm = ({ product, categories, subCategories }: Props) => {
 
                 <button
                   type="button"
-                  // onClick={() => deleteProductImage(image.id, image.url)}
+                  onClick={() => deleteProductImage(image.id, image.url)}
                   className="btn-danger w-full rounded-b-xl"
                 >
                   Eliminar
