@@ -76,7 +76,7 @@ export const RegisterForm = () => {
           <span className={`text-sm text-red-500`}>{errors.email.message}</span>
         )}
       </div>
-      <div className="flex justify-center gap-5  mb-5">
+      <div className="flex flex-col lg:flex-row justify-center gap-5 mb-5">
         <div className="flex flex-col">
           <label
             htmlFor="firsName"
@@ -118,7 +118,7 @@ export const RegisterForm = () => {
           )}
         </div>
       </div>
-      <div className="flex justify-center gap-5 mb-5">
+      <div className="flex flex-col lg:flex-row justify-center gap-5 mb-5">
         <div className="flex flex-col">
           <label
             htmlFor="password"
