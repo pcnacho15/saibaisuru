@@ -35,7 +35,7 @@ export const SlideShow = ({ images, title, className }: Props) => {
         spaceBetween={10}
         navigation={true}
         autoplay={{
-          delay: 60000,
+          delay: 2000,
         }}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs, Autoplay]}
