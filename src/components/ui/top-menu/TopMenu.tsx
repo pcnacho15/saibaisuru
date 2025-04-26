@@ -54,7 +54,7 @@ export const TopMenu = ({ categories }: Props) => {
 
   return (
     <nav
-      className={`flex fixed z-10 px-6 md:px-20 py-5 justify-between items-center w-full transition-all duration-300 ${
+      className={`flex fixed z-20 px-6 md:px-20 py-5 justify-between items-center w-full transition-all duration-300 ${
         isScrolled ? "bg-white/30 backdrop-blur-md" : "bg-none"
       }`}
     >
@@ -67,10 +67,10 @@ export const TopMenu = ({ categories }: Props) => {
       </div>
 
       {/* Opciones de Menu */}
-      <div className="hidden md:block text-sm">
+      <div className="hidden md:block text-base capitalize">
         <Link
-          className={`m-2 p-2 rounded-md font-semibold hover:text-purple-900 transition-all duration-200 ${
-            pathActive === "/" && "text-principal"
+          className={`m-2 p-2 rounded-md font-semibold hover:text-principal transition-all duration-200 ${
+            pathActive === "/" && "text-purple-900"
           }`}
           href="/"
         >
@@ -79,7 +79,7 @@ export const TopMenu = ({ categories }: Props) => {
         {categories.map((category) => (
           <Link
             key={category.id}
-            className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
+            className={`inline-block m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
               pathActive === `/categories/${category.nombre}` &&
               "text-purple-900"
             }`}

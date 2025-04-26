@@ -21,7 +21,7 @@ export const CarruselProducts = ({ products }: Props) => {
     <>
       <Carousel
         opts={{
-          align: "start",
+          align: "center",
           loop: true,
         }}
         plugins={[
@@ -29,7 +29,7 @@ export const CarruselProducts = ({ products }: Props) => {
             delay: 4000,
           }),
         ]}
-        className="w-full m-auto max-w-sm md:max-w-6xl"
+        className="md:pl-16 w-full m-auto max-w-sm md:max-w-7xl"
       >
         <CarouselContent>
           {products.map((product, index) => (
@@ -41,8 +41,10 @@ export const CarruselProducts = ({ products }: Props) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className="hidden md:block">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
       </Carousel>
     </>
   );

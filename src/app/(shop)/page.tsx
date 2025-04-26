@@ -1,52 +1,35 @@
-import { getFiltersProduct, getPaginatedProductsWithImages } from "@/actions";
-import { Pagination, ProductGrid, Title } from "@/components";
-import { ProductsFilter } from "@/components/products/ProductsFilter";
-import { redirect } from "next/navigation";
+// import { getPaginatedProductsWithImages } from "@/actions";
+import { Featured } from "@/components/featured/Featured";
+import { Benefits } from "@/components/ui/benefits/Benefits";
+import { Cta } from "@/components/ui/cta/Cta";
+import { HeroPage } from "@/components/ui/hero/Hero";
+// import { redirect } from "next/navigation";
 
-type SearchParams = Promise<{
-  page?: string;
-}>;
+// type SearchParams = Promise<{
+//   page?: string;
+// }>;
 
-export default async function Home(props: { searchParams: SearchParams }) {
-  const currentParams = await props.searchParams;
-  const currentPage = currentParams.page ? parseInt(currentParams.page) : 1;
+// export default async function Home(props: { searchParams: SearchParams }) {
+export default async function Home() {
+  // const currentParams = await props.searchParams;
+  // const currentPage = currentParams.page ? parseInt(currentParams.page) : 1;
 
-  const { products, totalPages } = await getPaginatedProductsWithImages({
-    page: currentPage,
-  });
+  // const { products, totalPages } = await getPaginatedProductsWithImages({
+  //   page: currentPage,
+  // });
 
-  if (products.length <= 0) {
-    redirect("/");
-  }
-
-  const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
+  // if (products.length <= 0) {
+  //   redirect("/");
+  // }
 
   return (
     <>
-      <Title
-        title="Tienda"
-        subtitle="Todos nuestros productos"
-      />
-      {/* <div className="flex flex-col items-center justify-center">
-        <div className="w-full">
-          <ProductsFilter
-          // marcas={marcas}
-          // colores={colores}
-          />
-          <ProductGrid products={products} />
-        </div>
-      </div> */}
-
-      <div className="flex mt-5">
-        <ProductsFilter
-          tipoSemillas={tipoSemillas}
-          tipoCultivos={tipoCultivos}
-        />
-        <div className="w-full">
-          <ProductGrid products={products} />
-        </div>
+      <div className="md:mx-20">
+        <HeroPage />
+        <Benefits />
+        <Featured />
+        <Cta />
       </div>
-      {totalPages > 1 && <Pagination totalPages={totalPages} />}
     </>
   );
 }
