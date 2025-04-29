@@ -84,12 +84,7 @@ export const TopMenu = ({ categories }: Props) => {
               "inline-block m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold",
               {
                 "text-purple-900":
-                  pathActive ===
-                  `${
-                    category.nombre === "blog"
-                      ? "/blog"
-                      : `/categories/${category.nombre}`
-                  }`,
+                  pathActive === `/categories/${category.nombre}`,
               }
             )}
             href={`${
@@ -101,6 +96,14 @@ export const TopMenu = ({ categories }: Props) => {
             {category.nombre}
           </Link>
         ))}
+        <Link
+          className={`m-2 p-2 rounded-md font-semibold hover:text-principal transition-all duration-200 ${
+            pathActive === "/blog" && "text-purple-900"
+          }`}
+          href="/blog"
+        >
+          Blog
+        </Link>
         {/* <Link
           className={`m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
             pathActive === "/categories/cultivo" && "text-purple-900"
