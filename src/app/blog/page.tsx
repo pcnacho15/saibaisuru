@@ -1,7 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import prisma from "@/lib/prisma";
 import { Title } from "@/components";
 import { getPostsPublished } from "@/actions";
 import { BlogItem } from "@/components/blog/BlogItem";
