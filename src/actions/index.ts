@@ -21,3 +21,8 @@ export * from "./categories/get-sub-categories";
 //* Checkout
 export * from "./checkout/get-departments";
 export * from "./checkout/get-municipios";
+
+
+//* Blog
+export * from "./blog/chage-delete-post";
+export * from "./blog/change-status-post";

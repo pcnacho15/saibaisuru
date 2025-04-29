@@ -18,7 +18,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { logout } from "@/actions";
-import { RiSeedlingLine } from "react-icons/ri";
+import { RiBloggerLine, RiSeedlingLine } from "react-icons/ri";
 import { MdOutlineCategory } from "react-icons/md";
 import { PiMailbox, PiShovel } from "react-icons/pi";
 import { BiLogIn } from "react-icons/bi";
@@ -192,6 +192,15 @@ export const Sidebar = () => {
             >
               <IoPeopleOutline size={30} />
               <span className="ml-3 text-xl">Usuarios</span>
+            </Link>
+
+            <Link
+              href="/admin/blog"
+              onClick={() => closeMenu()}
+              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+              <RiBloggerLine size={30} />
+              <span className="ml-3 text-xl">Blog</span>
             </Link>
 
             <div className="w-full h-px bg-gray-200 my-10"></div>

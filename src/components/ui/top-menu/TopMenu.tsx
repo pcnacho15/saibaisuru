@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import { useCartStore } from "@/store/cartStore";
 import { BiLogIn } from "react-icons/bi";
 import { Categoria } from "@/interfaces/Category";
+import clsx from "clsx";
 
 interface Props {
   categories: Categoria[];
@@ -79,11 +80,23 @@ export const TopMenu = ({ categories }: Props) => {
         {categories.map((category) => (
           <Link
             key={category.id}
-            className={`inline-block m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold ${
-              pathActive === `/categories/${category.nombre}` &&
-              "text-purple-900"
+            className={clsx(
+              "inline-block m-2 p-2 rounded-md hover:text-principal transition-all duration-200 font-semibold",
+              {
+                "text-purple-900":
+                  pathActive ===
+                  `${
+                    category.nombre === "blog"
+                      ? "/blog"
+                      : `/categories/${category.nombre}`
+                  }`,
+              }
+            )}
+            href={`${
+              category.nombre === "blog"
+                ? "/blog"
+                : `/categories/${category.nombre}`
             }`}
-            href={`/categories/${category.nombre}`}
           >
             {category.nombre}
           </Link>

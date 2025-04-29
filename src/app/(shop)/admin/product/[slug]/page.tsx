@@ -16,7 +16,6 @@ export default async function ProductPage(props: { params: Params }) {
     getSubCategories(),
   ]);
 
-  // Todo: new
   if (!product && slug !== "new") {
     redirect("/admin/products");
   }
