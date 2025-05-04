@@ -2,16 +2,20 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaSeedling } from "react-icons/fa";
 
 export const HeroPage = () => {
 
+  const [load, setLoad] = useState(true)
+
   const router = useRouter();
 
   const handlleNavigation = () => {
+    setLoad(false);
     // Navigate to the seeds category page
     router.push("/categories/semillas");
-
+    setLoad(true);
   }
   return (
     <section className="relative bg-[url(/imgs/hero2.png)] bg-cover bg-center md:bg-none fade-in text-white md:text-black min-h-[70vh] md:min-h-[80vh] flex items-center px-6 py-8 md:py-12 mt-8 rounded-xl">
@@ -32,10 +36,16 @@ export const HeroPage = () => {
           <div className="flex flex-wrap gap-4 mt-4">
             <button
               onClick={handlleNavigation}
-              className="flex items-center gap-1 bg-principal text-white font-semibold px-5 py-2 rounded-md shadow-md duration-200 active:scale-95 active:shadow-none transition-all"
+              className="flex items-center justify-center gap-1 w-full md:w-[40%] bg-principal text-white font-semibold px-5 py-2 rounded-md shadow-md duration-200 active:scale-95 active:shadow-none transition-all"
             >
-              Explorar Semillas
-              <FaSeedling size={20} />
+              {load ? (
+                <>
+                  Explorar Semillas
+                  <FaSeedling size={20} />
+                </>
+              ) : (
+                <div className="h-6 w-6 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
+              )}
             </button>
             {/* <button className="text-white font-medium px-5 py-2 border border-transparent hover:underline">
               Explorar Artist Pro
