@@ -4,6 +4,7 @@ import { firstFont } from "@/config/fonts";
 import { Provider } from "@/provider/Provider";
 import { ToastContainer } from "react-toastify";
 import AgeGateModal from "@/components/auth/age-gate-modal";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "SaibaiSuru",
@@ -16,12 +17,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-9RBFY4W0HS"
+        strategy="afterInteractive"
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-9RBFY4W0HS');
+            `,
+        }}
+      />
       <body className={`${firstFont.className} bg-gray-100`}>
         <AgeGateModal />
-        <Provider>
-          {children}
-        </Provider>
+        <Provider>{children}</Provider>
         <ToastContainer />
       </body>
     </html>
