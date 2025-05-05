@@ -1,9 +1,24 @@
 "use server";
 
+import prisma from "@/lib/prisma";
 import nodemailer from "nodemailer";
 
 export const sendMail = async (email: string) => {
   try {
+    const existingEmail = await prisma.suscripcion.findFirst({
+      where: {
+        email: email,
+      }
+    });
+
+    if (!existingEmail) {
+      await prisma.suscripcion.create({
+        data: {
+          email: email,
+        },
+      }); 
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {

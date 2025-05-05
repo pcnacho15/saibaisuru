@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  // output   = "../src/generated/prisma/client"
 }
 
 datasource db {
@@ -223,4 +224,10 @@ model post_imagenes {
 
   post    blog_posts @relation(fields: [post_id], references: [id])
   post_id String
+}
+
+model suscripcion {
+  id    String @id @default(uuid())
+  email String @unique
+  acepta_oferta Boolean @default(false)
 }

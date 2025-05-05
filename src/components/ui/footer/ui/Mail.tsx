@@ -2,6 +2,7 @@
 
 import { sendMail } from "@/actions";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const Mail = () => {
   const [email, setEmail] = useState("");
@@ -18,8 +19,16 @@ export const Mail = () => {
     if (ok) {
       setStatus("success");
       setEmail("");
+      toast.success("¡Guía enviada a tu correo!", {
+        position: "bottom-center",
+        autoClose: 1000,
+      });
     } else {
       setStatus("error");
+      toast.error("Upss, hubo un error al enviar la guía. Intenta de nuevo.", {
+        position: "bottom-center",
+        autoClose: 1000,
+      });
     }
   };
 
@@ -55,17 +64,6 @@ export const Mail = () => {
           )}
         </button>
       </form>
-
-      {status === "success" && (
-        <p className="mt-4 text-green-300">
-          ✅ Guía enviada correctamente, revisa tu correo.
-        </p>
-      )}
-      {status === "error" && (
-        <p className="mt-4 text-red-300">
-          ❌ Algo salió mal. Inténtalo de nuevo.
-        </p>
-      )}
     </div>
   );
 };
