@@ -4,20 +4,22 @@ import { Mail } from "./ui/Mail";
 
 export const Footer = () => {
   return (
-    <div className="bg-gradient-to-r from-purple-600 to-purple-500 pt-10 text-white">
+    <div className="bg-gray-200 [background:radial-gradient(125%_125%_at_50%_10%,#f3f4f6_45%,#63e_100%)] pt-10 text-gray-700">
       <Mail />
       <div className="flex flex-col w-full pb-8 gap-5">
         <div className="flex flex-col justify-center items-center text-sm gap-3">
           <Link href="/">
             <span className={`antialiased font-bold `}>SaibaiSuru Grow </span>
             <span>| Tienda de cultivo</span>
-            <span className="">
-              {" "}
-              © {new Date().getFullYear()}
-            </span>
+            <span className=""> © {new Date().getFullYear()}</span>
           </Link>
 
-          <Link className="hover:text-gray-200 transition-colors duration-150" href="/">Términos de Privacidad & legalidad</Link>
+          <Link
+            className="hover:text-gray-900 transition-colors duration-150"
+            href="/"
+          >
+            Términos de Privacidad & legalidad
+          </Link>
 
           {/* <Link href="/">Ubicaciones</Link> */}
         </div>
