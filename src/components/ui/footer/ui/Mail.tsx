@@ -19,10 +19,14 @@ export const Mail = () => {
     if (ok) {
       setStatus("success");
       setEmail("");
-      toast.success("¡Guía enviada a tu correo!", {
-        position: "bottom-center",
-        autoClose: 1000,
-      });
+      toast.success(
+        `¡Guía enviada correctamente! 🥷
+        En caso de no ver el correo, revisa en tu carpeta de SPAM`,
+        {
+          position: "bottom-center",
+          autoClose: 2000,
+        }
+      );
     } else {
       setStatus("error");
       toast.error("Upss, hubo un error al enviar la guía. Intenta de nuevo.", {
@@ -34,16 +38,16 @@ export const Mail = () => {
 
   return (
     <div className="flex flex-col w-full md:w-1/2 px-10 mb-10 text-center md:text-start">
-      <h2 className="text-3xl font-bold mb-4">
+      <h2 className="text-3xl xl:text-2xl font-bold mb-4">
         ¿Quieres aprender a cultivar? 🌿
       </h2>
-      <p className="mb-6 text-lg">
+      <p className="mb-6 text-lg xl:text-base">
         Recibe nuestra guía paso a paso directo a tu correo. ¡Totalmente gratis!
       </p>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col sm:flex-row items-center justify-start gap-4"
+        className="flex flex-col lg:flex-row items-center justify-start gap-4"
       >
         <input
           type="email"
@@ -55,7 +59,7 @@ export const Mail = () => {
         />
         <button
           type="submit"
-          className="flex items-center justify-center bg-white text-[#581c87] w-[25%] font-semibold px-6 py-2 rounded-md hover:bg-gray-100 transition"
+          className="flex items-center justify-center bg-white text-[#581c87] w-[50%] 2xl:w-[25%] font-semibold px-6 py-2 rounded-md hover:bg-gray-100 transition"
         >
           {status === "loading" ? (
             <div className="flex items-center justify-center h-6 w-6 border-t-transparent border-solid animate-spin rounded-full border-[#581c87] border-4"></div>

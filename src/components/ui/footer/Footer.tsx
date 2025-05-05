@@ -6,22 +6,22 @@ export const Footer = () => {
   return (
     <div className="bg-gradient-to-r from-purple-600 to-purple-500 pt-10 text-white">
       <Mail />
-      <div className="flex flex-col w-full h-full pb-8 gap-5">
-        <div className="flex px-10 justify-center items-center text-sm gap-5">
+      <div className="flex flex-col w-full pb-8 gap-5">
+        <div className="flex flex-col justify-center items-center text-sm gap-3">
           <Link href="/">
             <span className={`antialiased font-bold `}>SaibaiSuru Grow </span>
             <span>| Tienda de cultivo</span>
-            <span className="float-start sm:float-end sm:ml-1">
+            <span className="">
               {" "}
               © {new Date().getFullYear()}
             </span>
           </Link>
 
-          <Link href="/">Térmios de Privacidad & legalidad</Link>
+          <Link className="hover:text-gray-200 transition-colors duration-150" href="/">Términos de Privacidad & legalidad</Link>
 
           {/* <Link href="/">Ubicaciones</Link> */}
         </div>
-        <div className="flex px-10 justify-center items-center text-sm gap-5">
+        <div className="flex justify-center items-center text-sm gap-5">
           <Link
             href="https://www.instagram.com/saibaisuru/"
             target="_blank"
