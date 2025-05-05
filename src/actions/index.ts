@@ -27,3 +27,7 @@ export * from "./checkout/get-municipios";
 export * from "./blog/chage-delete-post";
 export * from "./blog/change-status-post";
 export * from "./blog/get-posts-published";
+
+
+//* Mail
+export * from "./mail/send-mail";

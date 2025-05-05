@@ -27,6 +27,7 @@
     "embla-carousel-react": "^8.5.2",
     "next": "^15.2.3",
     "next-auth": "^5.0.0-beta.25",
+    "nodemailer": "^6.10.1",
     "raw-body": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
