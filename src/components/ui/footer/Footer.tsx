@@ -4,9 +4,9 @@ import { Mail } from "./ui/Mail";
 
 export const Footer = () => {
   return (
-    <div className="bg-gradient-to-r from-purple-600 to-purple-500 pt-10 text-white mt-10">
+    <div className="bg-gradient-to-r from-purple-600 to-purple-500 pt-10 text-white">
       <Mail />
-      <div className="flex flex-col w-full h-full py-8 gap-5">
+      <div className="flex flex-col w-full h-full pb-8 gap-5">
         <div className="flex px-10 justify-center items-center text-sm gap-5">
           <Link href="/">
             <span className={`antialiased font-bold `}>SaibaiSuru Grow </span>
