@@ -80,7 +80,7 @@ export const LoginForm = () => {
         href="/auth/register"
         className="btn-secondary text-center"
       >
-        Crear una nueva cuenta
+        Crear nueva cuenta
       </Link>
     </form>
   );
