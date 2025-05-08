@@ -62,7 +62,7 @@ export const Mail = () => {
           className="flex items-center justify-center bg-gradient-to-r from-purple-600 to-purple-500 text-white w-[50%] 2xl:w-[25%] font-semibold px-6 py-2 rounded-md hover:bg-gray-100 transition"
         >
           {status === "loading" ? (
-            <div className="flex items-center justify-center h-6 w-6 border-t-transparent border-solid animate-spin rounded-full border-[#581c87] border-4"></div>
+            <div className="flex items-center justify-center h-6 w-6 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
           ) : (
             <>Enviar guía</>
           )}

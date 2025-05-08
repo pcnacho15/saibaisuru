@@ -42,7 +42,7 @@ export const Cta = () => {
         <div className="flex items-center justify-start gap-2 flex-wrap">
           <button
             onClick={handlleNavigation}
-            className="px-6 py-2 w-[50%] md:w-[35%] lg:w-[30%] 2xl:w-[25%] flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold hover:bg-gray-100 duration-200 active:scale-95 active:shadow-none transition-all"
+            className="px-6 py-2 w-full sm:w-[35%] lg:w-[30%] 2xl:w-[25%] flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold hover:bg-gray-100 duration-200 active:scale-95 active:shadow-none transition-all"
           >
             {load ? (
               <>Ir a la tienda</>
