@@ -61,7 +61,7 @@ export const ProductGridItem = ({ product }: Props) => {
   if (product.descuento === 0) product.descuento = null;
 
   return (
-    <div className="flex flex-col overflow-hidden fade-in w-full md:w-[80%] h-full">
+    <div className="flex flex-col overflow-hidden fade-in w-full md:w-[80%] mx-auto h-full">
       <Link
         href={`/product/${product.slug}`}
         className="hover:rotate-1 transition-all duration-300"

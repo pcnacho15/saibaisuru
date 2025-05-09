@@ -1,6 +1,6 @@
-import { getCategoryWithId, getFiltersProduct, getPaginatedProductsWithImages } from "@/actions";
+import { getCategoryWithId, /*getFiltersProduct,*/ getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
-import { ProductsFilter } from "@/components/products/ProductsFilter";
+// import { ProductsFilter } from "@/components/products/ProductsFilter";
 import { notFound } from "next/navigation";
 
 type Params = Promise<{
@@ -34,7 +34,7 @@ export default async function CategoryPage(props: {
     cultivo: "Cultivo",
   };
 
-   const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
+  //  const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
 
   return (
     <>
@@ -47,12 +47,12 @@ export default async function CategoryPage(props: {
         {/* {
           products.length > 0 ? ( */}
 
-        <ProductsFilter
+        {/* <ProductsFilter
           tipoSemillas={tipoSemillas}
           tipoCultivos={tipoCultivos}
           // tipoKits={tipoKits}
           category={category}
-        />
+        /> */}
         {/* )
           : ''
         } */}

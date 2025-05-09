@@ -5,6 +5,7 @@ import clsx from "clsx";
 
 import { useUiStore } from "@/store/uiStore";
 import {
+  IoCartOutline,
   // IoBulbOutline,
   IoCloseOutline,
   IoHomeOutline,
@@ -119,6 +120,16 @@ export const Sidebar = () => {
             <PiShovel size={30} />
             Cultivo
           </Link>
+          <Link
+            onClick={() => closeMenu()}
+            className={`flex items-center gap-3 text-xl mt-10 p-2 rounded transition-all ${
+              pathName === "/categories/cultivo" && "bg-gray-100 font-semibold"
+            }`}
+            href="/blog"
+          >
+            <RiBloggerLine size={30} />
+            Blog
+          </Link>
           {/* Separador */}
           <div className="w-full h-px bg-gray-200 my-10"></div>
         </div>
@@ -132,6 +143,14 @@ export const Sidebar = () => {
             >
               <IoPersonOutline size={30} />
               <span className="ml-3 text-xl">Perfil</span>
+            </Link>
+            <Link
+              href="/cart"
+              onClick={() => closeMenu()}
+              className="flex items-center  mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+              <IoCartOutline size={30} />
+              <span className="ml-3 text-xl">Mi carrito</span>
             </Link>
 
             <Link

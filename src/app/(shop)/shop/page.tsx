@@ -1,6 +1,6 @@
-import { getFiltersProduct, getPaginatedProductsWithImages } from "@/actions";
+import { /*getFiltersProduct,*/ getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
-import { ProductsFilter } from "@/components/products/ProductsFilter";
+// import { ProductsFilter } from "@/components/products/ProductsFilter";
 import { redirect } from "next/navigation";
 
 type SearchParams = Promise<{
@@ -19,7 +19,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
     redirect("/");
   }
 
-  const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
+  // const { tipoSemillas, tipoCultivos } = await getFiltersProduct();
 
   return (
     <>
@@ -38,10 +38,10 @@ export default async function Home(props: { searchParams: SearchParams }) {
       </div> */}
 
       <div className="flex mt-5">
-        <ProductsFilter
+        {/* <ProductsFilter
           tipoSemillas={tipoSemillas}
           tipoCultivos={tipoCultivos}
-        />
+        /> */}
         <div className="w-full">
           <ProductGrid products={products} />
         </div>
