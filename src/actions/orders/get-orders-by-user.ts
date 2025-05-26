@@ -13,6 +13,7 @@ export const getOrdersByUser = async () => {
     };
   }
 
+
   const orders = await prisma.order.findMany({
     // where: {
     //   userId: session.user.id,
@@ -23,9 +24,6 @@ export const getOrdersByUser = async () => {
           nombres: true,
           apellidos: true,
         },
-        where: {
-          correo: session.user.email,
-        },
       },
       OrderDetalle: {
         include: {
@@ -33,14 +31,19 @@ export const getOrdersByUser = async () => {
             include: {
               producto_imagenes: {
                 select: {
-                  url: true
-                }
-              }
-            }
-          }
-        }
-      }
+                  url: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
+    where: {
+      OrderAdress: {
+        correo: session.user.email,
+      }
+    }
   });
 
   return {

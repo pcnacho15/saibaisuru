@@ -25,7 +25,7 @@ export const HeroPage = () => {
 
       <div className="relative z-10 lg:max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
         {/* Textos */}
-        <div className="space-y-6">
+        <div className="space-y-6 animate-jump-in lg:animate-fade-right animate-delay-150">
           <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
             Un espacio creado por cultivadores para <br />
             <span className="text-principal">cultivadores</span>
@@ -60,7 +60,7 @@ export const HeroPage = () => {
           <Image
             src="/imgs/hero.png" // usa tu imagen aquí
             alt="Artista"
-            className="rounded-2xl w-full object-cover"
+            className="rounded-2xl w-full object-cover lg:animate-fade-left animate-delay-150"
             width={500}
             height={500} // ajusta el tamaño según sea necesario
             priority

@@ -156,7 +156,7 @@ export default async function ProductPage(props: { params: Params }) {
               value="item-1"
               autoFocus
             >
-              <AccordionTrigger className="text-base">
+              <AccordionTrigger className="text-lg underline font-bold">
                 Descripción
               </AccordionTrigger>
               <AccordionContent>
@@ -189,7 +189,7 @@ export default async function ProductPage(props: { params: Params }) {
             </AccordionItem> */}
             {product.notas && (
               <AccordionItem value="item-2">
-                <AccordionTrigger className="text-base">
+                <AccordionTrigger className="text-lg underline font-bold">
                   Efectos
                 </AccordionTrigger>
                 <AccordionContent className="text-lg flex flex-col gap-2">
