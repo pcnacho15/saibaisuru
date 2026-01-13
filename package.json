@@ -26,7 +26,7 @@
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
     "lucide-react": "^0.507.0",
-    "next": "^15.2.3",
+    "next": "15.2.8",
     "next-auth": "^5.0.0-beta.25",
     "nodemailer": "^6.10.1",
     "raw-body": "^3.0.0",
